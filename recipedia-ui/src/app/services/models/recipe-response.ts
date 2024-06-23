@@ -1,36 +1,14 @@
 /* tslint:disable */
 /* eslint-disable */
-import { CookingStep } from '../models/cooking-step';
-import { Ingredient } from '../models/ingredient';
+import { CookingStep } from './cooking-step';
+import { Ingredient } from './ingredient';
 export interface RecipeResponse {
   cookingSteps?: Array<CookingStep>;
-  cookingTime?: {
-'seconds'?: number;
-'zero'?: boolean;
-'nano'?: number;
-'negative'?: boolean;
-'positive'?: boolean;
-'units'?: Array<{
-'durationEstimated'?: boolean;
-'timeBased'?: boolean;
-'dateBased'?: boolean;
-}>;
-};
+  cookingTime?: string;
   description?: string;
   id?: number;
   ingredientList?: Array<Ingredient>;
-  preparationTime?: {
-'seconds'?: number;
-'zero'?: boolean;
-'nano'?: number;
-'negative'?: boolean;
-'positive'?: boolean;
-'units'?: Array<{
-'durationEstimated'?: boolean;
-'timeBased'?: boolean;
-'dateBased'?: boolean;
-}>;
-};
+  preparationTime?: string;
   tags?: Array<'KOREAN' | 'QUICK' | 'VEGAN' | 'BAKERY' | 'PASTA'>;
   title?: string;
 }

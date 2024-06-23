@@ -1,6 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
-import { ReviewResponse } from '../models/review-response';
+import { ReviewResponse } from './review-response';
 export interface PageResponseReviewResponse {
   content?: Array<ReviewResponse>;
   first?: boolean;

@@ -9,23 +9,40 @@
       "url": "https://rzndev.com",
       "email": "rosenberg2001fb@gmail.com"
     },
-    "license": { "name": "License1", "url": "https://Random-license-url.com " },
+    "license": {
+      "name": "License1",
+      "url": "https://Random-license-url.com "
+    },
     "version": "1.0"
   },
   "servers": [
-    { "url": "http://localhost:8080/api/v1", "description": "Local ENV" },
-    { "url": "https://rnzdev.com", "description": "Prod ENV" }
+    {
+      "url": "http://localhost:8080/api/v1",
+      "description": "Local ENV"
+    },
+    {
+      "url": "https://rnzdev.com",
+      "description": "Prod ENV"
+    }
   ],
-  "security": [{ "bearerAuth": [] }],
+  "security": [
+    {
+      "bearerAuth": []
+    }
+  ],
   "paths": {
     "/reviews": {
       "post": {
-        "tags": ["Review"],
+        "tags": [
+          "Review"
+        ],
         "operationId": "saveReview",
         "requestBody": {
           "content": {
             "application/json": {
-              "schema": { "$ref": "#/components/schemas/ReviewRequest" }
+              "schema": {
+                "$ref": "#/components/schemas/ReviewRequest"
+              }
             }
           },
           "required": true
@@ -34,7 +51,12 @@
           "200": {
             "description": "OK",
             "content": {
-              "*/*": { "schema": { "type": "integer", "format": "int64" } }
+              "*/*": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int64"
+                }
+              }
             }
           }
         }
@@ -42,20 +64,30 @@
     },
     "/recipes": {
       "get": {
-        "tags": ["Recipe"],
+        "tags": [
+          "Recipe"
+        ],
         "operationId": "findAllRecipes",
         "parameters": [
           {
             "name": "page",
             "in": "query",
             "required": false,
-            "schema": { "type": "integer", "format": "int32", "default": 0 }
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 0
+            }
           },
           {
             "name": "size",
             "in": "query",
             "required": false,
-            "schema": { "type": "integer", "format": "int32", "default": 10 }
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 10
+            }
           },
           {
             "name": "tags",
@@ -65,7 +97,13 @@
               "type": "array",
               "items": {
                 "type": "string",
-                "enum": ["KOREAN", "QUICK", "VEGAN", "BAKERY", "PASTA"]
+                "enum": [
+                  "KOREAN",
+                  "QUICK",
+                  "VEGAN",
+                  "BAKERY",
+                  "PASTA"
+                ]
               }
             }
           }
@@ -84,12 +122,16 @@
         }
       },
       "post": {
-        "tags": ["Recipe"],
+        "tags": [
+          "Recipe"
+        ],
         "operationId": "saveRecipe",
         "requestBody": {
           "content": {
             "application/json": {
-              "schema": { "$ref": "#/components/schemas/RecipeRequest" }
+              "schema": {
+                "$ref": "#/components/schemas/RecipeRequest"
+              }
             }
           },
           "required": true
@@ -98,7 +140,12 @@
           "200": {
             "description": "OK",
             "content": {
-              "*/*": { "schema": { "type": "integer", "format": "int64" } }
+              "*/*": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int64"
+                }
+              }
             }
           }
         }
@@ -106,30 +153,43 @@
     },
     "/recipes/cover/{recipe-id}": {
       "post": {
-        "tags": ["Recipe"],
+        "tags": [
+          "Recipe"
+        ],
         "operationId": "uploadRecipeStepImage",
         "parameters": [
           {
             "name": "recipe-id",
             "in": "path",
             "required": true,
-            "schema": { "type": "integer", "format": "int64" }
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
           },
           {
             "name": "stepNumber",
             "in": "query",
             "required": true,
-            "schema": { "type": "integer", "format": "int32" }
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
           }
         ],
         "requestBody": {
           "content": {
             "multipart/form-data": {
               "schema": {
-                "required": ["file"],
+                "required": [
+                  "file"
+                ],
                 "type": "object",
                 "properties": {
-                  "file": { "type": "string", "format": "binary" }
+                  "file": {
+                    "type": "string",
+                    "format": "binary"
+                  }
                 }
               }
             }
@@ -138,19 +198,29 @@
         "responses": {
           "200": {
             "description": "OK",
-            "content": { "*/*": { "schema": { "type": "object" } } }
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
           }
         }
       }
     },
     "/auth/register": {
       "post": {
-        "tags": ["Authentication"],
+        "tags": [
+          "Authentication"
+        ],
         "operationId": "register",
         "requestBody": {
           "content": {
             "application/json": {
-              "schema": { "$ref": "#/components/schemas/RegistrationRequest" }
+              "schema": {
+                "$ref": "#/components/schemas/RegistrationRequest"
+              }
             }
           },
           "required": true
@@ -158,19 +228,29 @@
         "responses": {
           "202": {
             "description": "Accepted",
-            "content": { "*/*": { "schema": { "type": "object" } } }
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
           }
         }
       }
     },
     "/auth/authenticate": {
       "post": {
-        "tags": ["Authentication"],
+        "tags": [
+          "Authentication"
+        ],
         "operationId": "authenticate",
         "requestBody": {
           "content": {
             "application/json": {
-              "schema": { "$ref": "#/components/schemas/AuthenticationRequest" }
+              "schema": {
+                "$ref": "#/components/schemas/AuthenticationRequest"
+              }
             }
           },
           "required": true
@@ -191,26 +271,39 @@
     },
     "/reviews/recipe/{recipe-id}": {
       "get": {
-        "tags": ["Review"],
+        "tags": [
+          "Review"
+        ],
         "operationId": "findAllReviewsByRecipe",
         "parameters": [
           {
             "name": "recipe-id",
             "in": "path",
             "required": true,
-            "schema": { "type": "integer", "format": "int64" }
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
           },
           {
             "name": "page",
             "in": "query",
             "required": false,
-            "schema": { "type": "integer", "format": "int32", "default": 0 }
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 0
+            }
           },
           {
             "name": "size",
             "in": "query",
             "required": false,
-            "schema": { "type": "integer", "format": "int32", "default": 10 }
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 10
+            }
           }
         ],
         "responses": {
@@ -229,14 +322,19 @@
     },
     "/recipes/{recipe-id}": {
       "get": {
-        "tags": ["Recipe"],
+        "tags": [
+          "Recipe"
+        ],
         "operationId": "findRecipeById",
         "parameters": [
           {
             "name": "recipe-id",
             "in": "path",
             "required": true,
-            "schema": { "type": "integer", "format": "int64" }
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
           }
         ],
         "responses": {
@@ -244,7 +342,9 @@
             "description": "OK",
             "content": {
               "*/*": {
-                "schema": { "$ref": "#/components/schemas/RecipeResponse" }
+                "schema": {
+                  "$ref": "#/components/schemas/RecipeResponse"
+                }
               }
             }
           }
@@ -253,20 +353,30 @@
     },
     "/recipes/author": {
       "get": {
-        "tags": ["Recipe"],
+        "tags": [
+          "Recipe"
+        ],
         "operationId": "findAllRecipesByAuthor",
         "parameters": [
           {
             "name": "page",
             "in": "query",
             "required": false,
-            "schema": { "type": "integer", "format": "int32", "default": 0 }
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 0
+            }
           },
           {
             "name": "size",
             "in": "query",
             "required": false,
-            "schema": { "type": "integer", "format": "int32", "default": 10 }
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 10
+            }
           },
           {
             "name": "tags",
@@ -276,7 +386,13 @@
               "type": "array",
               "items": {
                 "type": "string",
-                "enum": ["KOREAN", "QUICK", "VEGAN", "BAKERY", "PASTA"]
+                "enum": [
+                  "KOREAN",
+                  "QUICK",
+                  "VEGAN",
+                  "BAKERY",
+                  "PASTA"
+                ]
               }
             }
           }
@@ -297,24 +413,35 @@
     },
     "/auth/activate-account": {
       "get": {
-        "tags": ["Authentication"],
+        "tags": [
+          "Authentication"
+        ],
         "operationId": "confirm",
         "parameters": [
           {
             "name": "token",
             "in": "query",
             "required": true,
-            "schema": { "type": "string" }
+            "schema": {
+              "type": "string"
+            }
           }
         ],
-        "responses": { "200": { "description": "OK" } }
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
       }
     }
   },
   "components": {
     "schemas": {
       "ReviewRequest": {
-        "required": ["comment", "recipeId"],
+        "required": [
+          "comment",
+          "recipeId"
+        ],
         "type": "object",
         "properties": {
           "rate": {
@@ -323,25 +450,47 @@
             "type": "number",
             "format": "double"
           },
-          "comment": { "type": "string" },
-          "recipeId": { "type": "integer", "format": "int64" }
+          "comment": {
+            "type": "string"
+          },
+          "recipeId": {
+            "type": "integer",
+            "format": "int64"
+          }
         }
       },
       "CookingStep": {
-        "required": ["number", "text"],
+        "required": [
+          "number",
+          "text"
+        ],
         "type": "object",
         "properties": {
-          "text": { "type": "string" },
-          "image": { "type": "string" },
-          "number": { "type": "integer", "format": "int32" }
+          "text": {
+            "type": "string"
+          },
+          "image": {
+            "type": "string"
+          },
+          "number": {
+            "type": "integer",
+            "format": "int32"
+          }
         }
       },
       "Ingredient": {
-        "required": ["name", "quantity"],
+        "required": [
+          "name",
+          "quantity"
+        ],
         "type": "object",
         "properties": {
-          "name": { "type": "string" },
-          "quantity": { "type": "string" }
+          "name": {
+            "type": "string"
+          },
+          "quantity": {
+            "type": "string"
+          }
         }
       },
       "RecipeRequest": {
@@ -355,95 +504,69 @@
         ],
         "type": "object",
         "properties": {
-          "id": { "type": "integer", "format": "int64" },
-          "title": { "type": "string" },
-          "description": { "type": "string" },
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "title": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
           "preparationTime": {
-            "type": "object",
-            "properties": {
-              "seconds": { "type": "integer", "format": "int64" },
-              "zero": { "type": "boolean" },
-              "nano": { "type": "integer", "format": "int32" },
-              "negative": { "type": "boolean" },
-              "positive": { "type": "boolean" },
-              "units": {
-                "type": "array",
-                "items": {
-                  "type": "object",
-                  "properties": {
-                    "durationEstimated": { "type": "boolean" },
-                    "duration": {
-                      "type": "object",
-                      "properties": {
-                        "seconds": { "type": "integer", "format": "int64" },
-                        "zero": { "type": "boolean" },
-                        "nano": { "type": "integer", "format": "int32" },
-                        "negative": { "type": "boolean" },
-                        "positive": { "type": "boolean" }
-                      }
-                    },
-                    "timeBased": { "type": "boolean" },
-                    "dateBased": { "type": "boolean" }
-                  }
-                }
-              }
-            }
+            "pattern": "^(?:[1-5]?\\d(?:\\.\\d+)?|60(?:\\.0+)?) (minutes|minute|mins|min|hours|hour|hrs|hr)$\n",
+            "type": "string"
           },
           "cookingTime": {
-            "type": "object",
-            "properties": {
-              "seconds": { "type": "integer", "format": "int64" },
-              "zero": { "type": "boolean" },
-              "nano": { "type": "integer", "format": "int32" },
-              "negative": { "type": "boolean" },
-              "positive": { "type": "boolean" },
-              "units": {
-                "type": "array",
-                "items": {
-                  "type": "object",
-                  "properties": {
-                    "durationEstimated": { "type": "boolean" },
-                    "duration": {
-                      "type": "object",
-                      "properties": {
-                        "seconds": { "type": "integer", "format": "int64" },
-                        "zero": { "type": "boolean" },
-                        "nano": { "type": "integer", "format": "int32" },
-                        "negative": { "type": "boolean" },
-                        "positive": { "type": "boolean" }
-                      }
-                    },
-                    "timeBased": { "type": "boolean" },
-                    "dateBased": { "type": "boolean" }
-                  }
-                }
-              }
-            }
+            "pattern": "^(?:[1-5]?\\d(?:\\.\\d+)?|60(?:\\.0+)?) (minutes|minute|mins|min|hours|hour|hrs|hr)$\n",
+            "type": "string"
           },
           "cookingSteps": {
             "type": "array",
-            "items": { "$ref": "#/components/schemas/CookingStep" }
+            "items": {
+              "$ref": "#/components/schemas/CookingStep"
+            }
           },
           "ingredientList": {
             "type": "array",
-            "items": { "$ref": "#/components/schemas/Ingredient" }
+            "items": {
+              "$ref": "#/components/schemas/Ingredient"
+            }
           },
           "tags": {
             "type": "array",
             "items": {
               "type": "string",
-              "enum": ["KOREAN", "QUICK", "VEGAN", "BAKERY", "PASTA"]
+              "enum": [
+                "KOREAN",
+                "QUICK",
+                "VEGAN",
+                "BAKERY",
+                "PASTA"
+              ]
             }
           }
         }
       },
       "RegistrationRequest": {
-        "required": ["email", "firstname", "lastname", "password"],
+        "required": [
+          "email",
+          "firstname",
+          "lastname",
+          "password"
+        ],
         "type": "object",
         "properties": {
-          "firstname": { "type": "string" },
-          "lastname": { "type": "string" },
-          "email": { "type": "string" },
+          "firstname": {
+            "type": "string"
+          },
+          "lastname": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
           "password": {
             "maxLength": 2147483647,
             "minLength": 8,
@@ -452,10 +575,15 @@
         }
       },
       "AuthenticationRequest": {
-        "required": ["email", "password"],
+        "required": [
+          "email",
+          "password"
+        ],
         "type": "object",
         "properties": {
-          "email": { "type": "string" },
+          "email": {
+            "type": "string"
+          },
           "password": {
             "maxLength": 2147483647,
             "minLength": 8,
@@ -465,29 +593,58 @@
       },
       "AuthenticationResponse": {
         "type": "object",
-        "properties": { "jwtToken": { "type": "string" } }
+        "properties": {
+          "jwtToken": {
+            "type": "string"
+          }
+        }
       },
       "PageResponseReviewResponse": {
         "type": "object",
         "properties": {
           "content": {
             "type": "array",
-            "items": { "$ref": "#/components/schemas/ReviewResponse" }
+            "items": {
+              "$ref": "#/components/schemas/ReviewResponse"
+            }
           },
-          "number": { "type": "integer", "format": "int32" },
-          "size": { "type": "integer", "format": "int32" },
-          "totalElements": { "type": "integer", "format": "int64" },
-          "totalPages": { "type": "integer", "format": "int64" },
-          "first": { "type": "boolean" },
-          "last": { "type": "boolean" }
+          "number": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "size": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalElements": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "totalPages": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "first": {
+            "type": "boolean"
+          },
+          "last": {
+            "type": "boolean"
+          }
         }
       },
       "ReviewResponse": {
         "type": "object",
         "properties": {
-          "rate": { "type": "number", "format": "double" },
-          "comment": { "type": "string" },
-          "ownFeedback": { "type": "boolean" }
+          "rate": {
+            "type": "number",
+            "format": "double"
+          },
+          "comment": {
+            "type": "string"
+          },
+          "ownFeedback": {
+            "type": "boolean"
+          }
         }
       },
       "PageResponseRecipeResponse": {
@@ -495,77 +652,76 @@
         "properties": {
           "content": {
             "type": "array",
-            "items": { "$ref": "#/components/schemas/RecipeResponse" }
+            "items": {
+              "$ref": "#/components/schemas/RecipeResponse"
+            }
           },
-          "number": { "type": "integer", "format": "int32" },
-          "size": { "type": "integer", "format": "int32" },
-          "totalElements": { "type": "integer", "format": "int64" },
-          "totalPages": { "type": "integer", "format": "int64" },
-          "first": { "type": "boolean" },
-          "last": { "type": "boolean" }
+          "number": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "size": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalElements": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "totalPages": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "first": {
+            "type": "boolean"
+          },
+          "last": {
+            "type": "boolean"
+          }
         }
       },
       "RecipeResponse": {
         "type": "object",
         "properties": {
-          "id": { "type": "integer", "format": "int64" },
-          "title": { "type": "string" },
-          "description": { "type": "string" },
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "title": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
           "preparationTime": {
-            "type": "object",
-            "properties": {
-              "seconds": { "type": "integer", "format": "int64" },
-              "zero": { "type": "boolean" },
-              "nano": { "type": "integer", "format": "int32" },
-              "negative": { "type": "boolean" },
-              "positive": { "type": "boolean" },
-              "units": {
-                "type": "array",
-                "items": {
-                  "type": "object",
-                  "properties": {
-                    "durationEstimated": { "type": "boolean" },
-                    "timeBased": { "type": "boolean" },
-                    "dateBased": { "type": "boolean" }
-                  }
-                }
-              }
-            }
+            "type": "string"
           },
           "cookingTime": {
-            "type": "object",
-            "properties": {
-              "seconds": { "type": "integer", "format": "int64" },
-              "zero": { "type": "boolean" },
-              "nano": { "type": "integer", "format": "int32" },
-              "negative": { "type": "boolean" },
-              "positive": { "type": "boolean" },
-              "units": {
-                "type": "array",
-                "items": {
-                  "type": "object",
-                  "properties": {
-                    "durationEstimated": { "type": "boolean" },
-                    "timeBased": { "type": "boolean" },
-                    "dateBased": { "type": "boolean" }
-                  }
-                }
-              }
-            }
+            "type": "string"
           },
           "cookingSteps": {
             "type": "array",
-            "items": { "$ref": "#/components/schemas/CookingStep" }
+            "items": {
+              "$ref": "#/components/schemas/CookingStep"
+            }
           },
           "ingredientList": {
             "type": "array",
-            "items": { "$ref": "#/components/schemas/Ingredient" }
+            "items": {
+              "$ref": "#/components/schemas/Ingredient"
+            }
           },
           "tags": {
             "type": "array",
             "items": {
               "type": "string",
-              "enum": ["KOREAN", "QUICK", "VEGAN", "BAKERY", "PASTA"]
+              "enum": [
+                "KOREAN",
+                "QUICK",
+                "VEGAN",
+                "BAKERY",
+                "PASTA"
+              ]
             }
           }
         }

@@ -11,7 +11,6 @@ import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -28,8 +27,8 @@ public class Recipe {
     @GeneratedValue
     private Long id;
 
-    private Duration preparationTime;
-    private Duration cookingTime;
+    private String preparationTime;
+    private String cookingTime;
 
     private String title;
     private String description;

@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
-import { AuthenticationRequest } from '../services/models';
-import { FormsModule } from '@angular/forms';
+import {Component} from '@angular/core';
+import {AuthenticationRequest} from '../services/models';
+import {FormsModule} from '@angular/forms';
 
 @Component({
   selector: 'recipedia-login',

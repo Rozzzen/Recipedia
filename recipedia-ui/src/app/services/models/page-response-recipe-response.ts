@@ -1,6 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
-import { RecipeResponse } from '../models/recipe-response';
+import { RecipeResponse } from './recipe-response';
 export interface PageResponseRecipeResponse {
   content?: Array<RecipeResponse>;
   first?: boolean;
