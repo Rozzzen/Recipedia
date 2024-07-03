@@ -1,0 +1,72 @@
+<h2>My list</h2>
+<hr>
+<div class="d-flex justify-content-end mb-3">
+  <a routerLink="/recipes/manage" class="btn btn-outline-success">
+    <i class="fas fa-plus">&nbsp;new Recipe</i>
+  </a>
+</div>
+<div class="d-flex justify-content-center gap-5 flex-wrap">
+  <recipedia-recipe-card [manageable]="true"
+                         [recipe]="recipe"
+                         *ngFor="let recipe of recipeResponse.content"
+                         (edit)="editRecipe($event)"
+                         (delete)="deleteRecipe($event)"></recipedia-recipe-card>
+</div>
+
+
+<div class="d-flex justify-content-center mt-3">
+  <nav aria-label="Page navigation">
+    <ul class="pagination">
+
+      <li class="page-item">
+        <a class="page-link"
+           href="javascript:void(0)"
+           aria-label="Previous"
+           (click)="goToFirstPage()"
+           [class.disabled]="page == 0">
+          <i class="fas fa-solid fa-angles-left"></i>
+        </a>
+      </li>
+      <li class="page-item">
+        <a class="page-link"
+           href="javascript:void(0)"
+           aria-label="Previous"
+           (click)="goToPreviousPage()"
+           [class.disabled]="page == 0">
+          <i class="fas fa-solid fa-angle-left"></i>
+        </a>
+      </li>
+
+      <li class="page-item"
+          *ngFor="let _ of [].constructor(this.recipeResponse.totalPages); let pageIndex = index">
+        <a class="page-link"
+           href="javascript:void(0)"
+           aria-label="Previous"
+           (click)="goToPage(pageIndex)"
+           [class.active]="page == pageIndex">
+          {{ pageIndex + 1 }}
+        </a>
+      </li>
+
+      <li class="page-item">
+        <a class="page-link"
+           href="javascript:void(0)"
+           aria-label="Next"
+           (click)="goToNextPage()"
+           [class.disabled]="isLastPage()">
+          <i class="fas fa-solid fa-chevron-right"></i>
+        </a>
+      </li>
+      <li class="page-item">
+        <a class="page-link"
+           href="javascript:void(0)"
+           aria-label="Next"
+           (click)="goToLastPage()"
+           [class.disabled]="isLastPage()">
+          <i class="fas fa-solid fa-angles-right"></i>
+        </a>
+      </li>
+
+    </ul>
+  </nav>
+</div>

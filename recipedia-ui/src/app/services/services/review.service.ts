@@ -1,19 +1,17 @@
 /* tslint:disable */
 /* eslint-disable */
-import { HttpClient, HttpContext } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import {HttpClient, HttpContext} from '@angular/common/http';
+import {Injectable} from '@angular/core';
+import {Observable} from 'rxjs';
+import {map} from 'rxjs/operators';
 
-import { BaseService } from '../base-service';
-import { ApiConfiguration } from '../api-configuration';
-import { StrictHttpResponse } from '../strict-http-response';
+import {BaseService} from '../base-service';
+import {ApiConfiguration} from '../api-configuration';
+import {StrictHttpResponse} from '../strict-http-response';
 
-import { findAllReviewsByRecipe } from '../fn/review/find-all-reviews-by-recipe';
-import { FindAllReviewsByRecipe$Params } from '../fn/review/find-all-reviews-by-recipe';
-import { PageResponseReviewResponse } from '../models/page-response-review-response';
-import { saveReview } from '../fn/review/save-review';
-import { SaveReview$Params } from '../fn/review/save-review';
+import {findAllReviewsByRecipe, FindAllReviewsByRecipe$Params} from '../fn/review/find-all-reviews-by-recipe';
+import {PageResponseReviewResponse} from '../models/page-response-review-response';
+import {saveReview, SaveReview$Params} from '../fn/review/save-review';
 
 @Injectable({ providedIn: 'root' })
 export class ReviewService extends BaseService {

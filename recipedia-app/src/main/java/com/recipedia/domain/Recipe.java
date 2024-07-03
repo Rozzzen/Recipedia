@@ -32,14 +32,15 @@ public class Recipe {
 
     private String title;
     private String description;
+    private String titleImage;
 
-    @OneToMany(mappedBy = "recipe", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "recipe")
     private List<Review> reviews;
 
     @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "ingredient",
             joinColumns = @JoinColumn(name = "recipe_id", nullable = false))
-    private List<Ingredient> ingredientList;
+    private List<Ingredient> ingredients;
 
     @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "cooking_step",

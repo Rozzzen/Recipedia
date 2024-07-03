@@ -43,7 +43,7 @@ public class RecipeService {
     }
 
     public PageResponse<RecipeResponse> findAllRecipes(int page, int size, List<RecipeTag> tags) {
-        Pageable pageable = PageRequest.of(page, size, Sort.by("createdDate").descending());
+        Pageable pageable = PageRequest.of(page, size, Sort.by("createdAt").descending());
         Page<Recipe> recipes = recipeRepository.findAll(containsTag(tags), pageable);
 
         List<RecipeResponse> recipeResponse = recipes.stream()
@@ -63,7 +63,7 @@ public class RecipeService {
     public PageResponse<RecipeResponse> findAllRecipesByOwner(int page, int size, List<RecipeTag> tags, Authentication connectedUser) {
         User user = (User) connectedUser.getPrincipal();
 
-        Pageable pageable = PageRequest.of(page, size, Sort.by("createdDate").descending());
+        Pageable pageable = PageRequest.of(page, size, Sort.by("createdAt").descending());
         Page<Recipe> recipes = recipeRepository.findAll(withAuthorId(user.getId()).and(containsTag(tags)), pageable);
 
         List<RecipeResponse> recipeResponse = recipes.stream()
@@ -89,5 +89,19 @@ public class RecipeService {
         var recipeStepImage = fileStorageService.saveFile(file, user.getId());
         recipe.getCookingSteps().get(stepNumber).setImage(recipeStepImage);
         recipeRepository.save(recipe);
+    }
+
+    public void uploadRecipeTitleImage(MultipartFile file, Authentication connectedUser, Long recipeId) {
+        Recipe recipe = recipeRepository.findById(recipeId)
+                .orElseThrow(() -> new EntityNotFoundException("No recipe found with id:" + recipeId));
+
+        User user = (User) connectedUser.getPrincipal();
+        var recipeTitleImage = fileStorageService.saveFile(file, user.getId());
+        recipe.setTitleImage(recipeTitleImage);
+        recipeRepository.save(recipe);
+    }
+
+    public void deleteRecipe(Long recipeId) {
+        recipeRepository.deleteById(recipeId);
     }
 }

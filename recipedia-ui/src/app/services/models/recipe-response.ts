@@ -1,14 +1,17 @@
 /* tslint:disable */
 /* eslint-disable */
-import { CookingStep } from './cooking-step';
-import { Ingredient } from './ingredient';
+import {CookingStep} from '../models/cooking-step';
+import {Ingredient} from '../models/ingredient';
+
 export interface RecipeResponse {
   cookingSteps?: Array<CookingStep>;
   cookingTime?: string;
   description?: string;
   id?: number;
-  ingredientList?: Array<Ingredient>;
+  ingredients?: Array<Ingredient>;
   preparationTime?: string;
-  tags?: Array<'KOREAN' | 'QUICK' | 'VEGAN' | 'BAKERY' | 'PASTA'>;
+  rate?: number;
+  tags?: Array<'KOREAN' | 'SALAD' | 'QUICK' | 'VEGAN' | 'ITALIAN' | 'VEGETARIAN' | 'SOUP' | 'BAKERY' | 'PASTA' | 'CHICKEN'>;
   title?: string;
+  titleImage?: Array<string>;
 }

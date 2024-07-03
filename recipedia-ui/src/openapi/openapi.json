@@ -99,10 +99,15 @@
                 "type": "string",
                 "enum": [
                   "KOREAN",
+                  "SALAD",
                   "QUICK",
                   "VEGAN",
+                  "ITALIAN",
+                  "VEGETARIAN",
+                  "SOUP",
                   "BAKERY",
-                  "PASTA"
+                  "PASTA",
+                  "CHICKEN"
                 ]
               }
             }
@@ -151,7 +156,7 @@
         }
       }
     },
-    "/recipes/cover/{recipe-id}": {
+    "/recipes/stepImage/{recipe-id}": {
       "post": {
         "tags": [
           "Recipe"
@@ -174,6 +179,55 @@
             "schema": {
               "type": "integer",
               "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "required": [
+                  "file"
+                ],
+                "type": "object",
+                "properties": {
+                  "file": {
+                    "type": "string",
+                    "format": "binary"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/recipes/image/{recipe-id}": {
+      "post": {
+        "tags": [
+          "Recipe"
+        ],
+        "operationId": "uploadRecipeTitleImage",
+        "parameters": [
+          {
+            "name": "recipe-id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
             }
           }
         ],
@@ -349,6 +403,28 @@
             }
           }
         }
+      },
+      "delete": {
+        "tags": [
+          "Recipe"
+        ],
+        "operationId": "deleteRecipeById",
+        "parameters": [
+          {
+            "name": "recipe-id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
       }
     },
     "/recipes/author": {
@@ -388,10 +464,15 @@
                 "type": "string",
                 "enum": [
                   "KOREAN",
+                  "SALAD",
                   "QUICK",
                   "VEGAN",
+                  "ITALIAN",
+                  "VEGETARIAN",
+                  "SOUP",
                   "BAKERY",
-                  "PASTA"
+                  "PASTA",
+                  "CHICKEN"
                 ]
               }
             }
@@ -498,7 +579,7 @@
           "cookingSteps",
           "cookingTime",
           "description",
-          "ingredientList",
+          "ingredients",
           "preparationTime",
           "title"
         ],
@@ -515,11 +596,11 @@
             "type": "string"
           },
           "preparationTime": {
-            "pattern": "^(?:[1-5]?\\d(?:\\.\\d+)?|60(?:\\.0+)?) (minutes|minute|mins|min|hours|hour|hrs|hr)$\n",
+            "pattern": "^(?:[1-5]?\\d(?:\\.\\d+)?|60(?:\\.0+)?) (minutes|minute|mins|min|hours|hour|hrs|hr)$",
             "type": "string"
           },
           "cookingTime": {
-            "pattern": "^(?:[1-5]?\\d(?:\\.\\d+)?|60(?:\\.0+)?) (minutes|minute|mins|min|hours|hour|hrs|hr)$\n",
+            "pattern": "^(?:[1-5]?\\d(?:\\.\\d+)?|60(?:\\.0+)?) (minutes|minute|mins|min|hours|hour|hrs|hr)$",
             "type": "string"
           },
           "cookingSteps": {
@@ -528,7 +609,7 @@
               "$ref": "#/components/schemas/CookingStep"
             }
           },
-          "ingredientList": {
+          "ingredients": {
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/Ingredient"
@@ -540,10 +621,15 @@
               "type": "string",
               "enum": [
                 "KOREAN",
+                "SALAD",
                 "QUICK",
                 "VEGAN",
+                "ITALIAN",
+                "VEGETARIAN",
+                "SOUP",
                 "BAKERY",
-                "PASTA"
+                "PASTA",
+                "CHICKEN"
               ]
             }
           }
@@ -699,13 +785,17 @@
           "cookingTime": {
             "type": "string"
           },
+          "rate": {
+            "type": "number",
+            "format": "double"
+          },
           "cookingSteps": {
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/CookingStep"
             }
           },
-          "ingredientList": {
+          "ingredients": {
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/Ingredient"
@@ -717,11 +807,23 @@
               "type": "string",
               "enum": [
                 "KOREAN",
+                "SALAD",
                 "QUICK",
                 "VEGAN",
+                "ITALIAN",
+                "VEGETARIAN",
+                "SOUP",
                 "BAKERY",
-                "PASTA"
+                "PASTA",
+                "CHICKEN"
               ]
+            }
+          },
+          "titleImage": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "byte"
             }
           }
         }

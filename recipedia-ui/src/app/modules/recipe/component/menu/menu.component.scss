@@ -1,0 +1,15 @@
+.fa-door-open {
+  color: black;
+}
+li > a {
+  &:hover {
+    background: #d2fcd9;
+    border-radius: 5px;
+  }
+  &.active {
+    color: darkgreen;
+    font-weight: bold;
+    background: #d2fcd9;
+    border-radius: 5px;
+  }
+}

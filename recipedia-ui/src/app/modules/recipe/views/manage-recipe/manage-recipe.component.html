@@ -1,0 +1,103 @@
+<div class="p-2">
+  <h2>Manage recipe</h2>
+  <hr>
+  <div class="alert alert-danger mt-2" role="alert" *ngIf="errorMsg.length">
+    <p class="p-0 m-0" *ngFor="let msg of errorMsg">{{ msg }}</p>
+  </div>
+  <div class="d-flex gap-2">
+    <div class="col-3">
+      <img class="rounded-1" width="100%" height="500px" [src]="selectedPictureString || 'https://picsum.photos/200/300'"
+           alt="...">
+      <div class="mt-2">
+        <input class="form-control"
+               type="file"
+               id="formFile"
+               accept="img/*"
+               (change)="onFileSelected($event)">
+      </div>
+    </div>
+    <div class="col-9">
+      <form [formGroup]="recipeForm" (ngSubmit)="saveRecipe()" class="row g-3">
+        <div class="col-12">
+          <label for="title" class="form-label">Title</label>
+          <input formControlName="title" name="title" type="text" class="form-control" id="title"
+                 placeholder="recipe title">
+        </div>
+        <div class="col-6">
+          <label for="cookingTime" class="form-label">Cooking time</label>
+          <input formControlName="cookingTime" name="cookingTime" type="text" class="form-control"
+                 id="cookingTime"
+                 placeholder="cooking time">
+        </div>
+        <div class="col-6">
+          <label for="preparationTime" class="form-label">Preparation time</label>
+          <input formControlName="preparationTime" name="preparationTime" type="text" class="form-control"
+                 id="preparationTime"
+                 placeholder="preparation time">
+        </div>
+        <div class="col-12">
+          <label for="description" class="form-label">Description</label>
+          <textarea formControlName="description" name="description" rows="3" class="form-control"
+                    id="description"
+                    placeholder="description"></textarea>
+        </div>
+
+        <div formArrayName="cookingSteps" class="col-12 gap-1">
+          <h2>Cooking steps</h2>
+          <div *ngFor="let _ of cookingSteps.controls; let i = index" [formGroupName]="i" class="row mx-1 mt-4">
+            <div class="col-9"><input type="text"
+                                      [id]="'cookingStep' + i"
+                                      formControlName="text"
+                                      class="form-control"
+                                      [placeholder]="'Cooking step #' + (i + 1)"
+                                      [name]="'cookingStep' + i"></div>
+            <button type="button" (click)="removeStep(i)" class="btn btn-danger col-3">Remove Step</button>
+          </div>
+        </div>
+        <div class="d-flex justify-content-center">
+          <button type="button" (click)="addStep()" style="width: 50%" class="btn btn-success">Add Step</button>
+        </div>
+
+        <div formArrayName="ingredients" class="col-12 gap-1">
+          <hr>
+          <h2>Ingredients</h2>
+          <div class="row col-10">
+            <div class="mt-3 col-5"><h3>Name</h3></div>
+            <div class="mt-3 col-5"><h3>Quantity</h3></div>
+          </div>
+          <div *ngFor="let _ of ingredients.controls; let i = index" [formGroupName]="i" class="row mx-1 mt-4">
+            <div class="row col-10">
+              <div class="col-5">
+                <input type="text"
+                       [id]="'ingredient' + i"
+                       class="form-control"
+                       formControlName="name"
+                       placeholder="mayo">
+              </div>
+              <div class="col-5">
+                <input type="text"
+                       [id]="'ingredient' + i"
+                       formControlName="quantity"
+                       placeholder="1 cup"
+                       class="form-control">
+              </div>
+            </div>
+            <button type="button" (click)="removeIngredient(i)" class="btn btn-danger col-2">Remove Ingredient
+            </button>
+          </div>
+        </div>
+        <div class="d-flex justify-content-center">
+          <button type="button" (click)="addIngredient()" style="width: 50%" class="btn btn-success">Add Ingredient</button>
+        </div>
+        <div class="d-flex justify-content-end gap-2 col-12">
+          <button type="submit" class="btn btn-outline-primary">
+            <i class="fas fa-save">&nbsp;Save</i>
+          </button>
+          <a routerLink="/recipes/my-recipes" class="btn btn-link text-danger">
+            <i class="fas fa-times">&nbsp;Cancel</i>
+          </a>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

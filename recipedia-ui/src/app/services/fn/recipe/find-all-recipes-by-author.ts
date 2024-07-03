@@ -1,17 +1,17 @@
 /* tslint:disable */
 /* eslint-disable */
-import { HttpClient, HttpContext, HttpResponse } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { filter, map } from 'rxjs/operators';
-import { StrictHttpResponse } from '../../strict-http-response';
-import { RequestBuilder } from '../../request-builder';
+import {HttpClient, HttpContext, HttpResponse} from '@angular/common/http';
+import {Observable} from 'rxjs';
+import {filter, map} from 'rxjs/operators';
+import {StrictHttpResponse} from '../../strict-http-response';
+import {RequestBuilder} from '../../request-builder';
 
-import { PageResponseRecipeResponse } from '../../models/page-response-recipe-response';
+import {PageResponseRecipeResponse} from '../../models/page-response-recipe-response';
 
 export interface FindAllRecipesByAuthor$Params {
   page?: number;
   size?: number;
-  tags?: Array<'KOREAN' | 'QUICK' | 'VEGAN' | 'BAKERY' | 'PASTA'>;
+  tags?: Array<'KOREAN' | 'SALAD' | 'QUICK' | 'VEGAN' | 'ITALIAN' | 'VEGETARIAN' | 'SOUP' | 'BAKERY' | 'PASTA' | 'CHICKEN'>;
 }
 
 export function findAllRecipesByAuthor(http: HttpClient, rootUrl: string, params?: FindAllRecipesByAuthor$Params, context?: HttpContext): Observable<StrictHttpResponse<PageResponseRecipeResponse>> {
@@ -23,7 +23,7 @@ export function findAllRecipesByAuthor(http: HttpClient, rootUrl: string, params
   }
 
   return http.request(
-    rb.build({ responseType: 'blob', accept: '*/*', context })
+    rb.build({ responseType: 'json', accept: '*/*', context })
   ).pipe(
     filter((r: any): r is HttpResponse<any> => r instanceof HttpResponse),
     map((r: HttpResponse<any>) => {

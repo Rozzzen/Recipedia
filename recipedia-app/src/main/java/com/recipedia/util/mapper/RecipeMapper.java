@@ -3,6 +3,7 @@ package com.recipedia.util.mapper;
 import com.recipedia.domain.Recipe;
 import com.recipedia.dto.RecipeRequest;
 import com.recipedia.dto.RecipeResponse;
+import com.recipedia.util.FileUtils;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -15,7 +16,7 @@ public class RecipeMapper {
                 .preparationTime(recipeRequest.preparationTime())
                 .cookingTime(recipeRequest.cookingTime())
                 .cookingSteps(recipeRequest.cookingSteps())
-                .ingredientList(recipeRequest.ingredientList())
+                .ingredients(recipeRequest.ingredients())
                 .tags(recipeRequest.tags())
                 .build();
     }
@@ -25,11 +26,13 @@ public class RecipeMapper {
                 .id(recipe.getId())
                 .title(recipe.getTitle())
                 .description(recipe.getDescription())
+                .rate(recipe.getRate())
                 .preparationTime(recipe.getPreparationTime())
                 .cookingTime(recipe.getCookingTime())
                 .cookingSteps(recipe.getCookingSteps())
-                .ingredientList(recipe.getIngredientList())
+                .ingredients(recipe.getIngredients())
                 .tags(recipe.getTags())
+                .titleImage(FileUtils.readFileFromLocation(recipe.getTitleImage()))
                 .build();
     }
 }

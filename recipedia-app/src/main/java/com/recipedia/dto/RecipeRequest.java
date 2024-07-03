@@ -23,19 +23,19 @@ public record RecipeRequest(
 
         @NotNull(message = "102")
         @NotEmpty(message = "102")
-        @Pattern(regexp = "^(?:[1-5]?\\d(?:\\.\\d+)?|60(?:\\.0+)?) (minutes|minute|mins|min|hours|hour|hrs|hr)$\n")
+        @Pattern(regexp = "^(?:[1-5]?\\d(?:\\.\\d+)?|60(?:\\.0+)?) (minutes|minute|mins|min|hours|hour|hrs|hr)$", message = "102")
         String preparationTime,
 
         @NotNull(message = "103")
         @NotEmpty(message = "103")
-        @Pattern(regexp = "^(?:[1-5]?\\d(?:\\.\\d+)?|60(?:\\.0+)?) (minutes|minute|mins|min|hours|hour|hrs|hr)$\n")
+        @Pattern(regexp = "^(?:[1-5]?\\d(?:\\.\\d+)?|60(?:\\.0+)?) (minutes|minute|mins|min|hours|hour|hrs|hr)$", message = "103")
         String cookingTime,
 
         @NotEmpty(message = "104")
         List<@Valid CookingStep> cookingSteps,
 
         @NotEmpty(message = "105")
-        List<@Valid Ingredient> ingredientList,
+        List<@Valid Ingredient> ingredients,
 
         List<RecipeTag> tags
 ) {

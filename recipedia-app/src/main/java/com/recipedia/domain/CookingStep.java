@@ -1,6 +1,5 @@
 package com.recipedia.domain;
 
-import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
@@ -17,7 +16,6 @@ public class CookingStep {
     @NotEmpty(message = "104")
     private String text;
 
-    @Column(nullable = true)
     private String image;
 
     @NotNull(message = "104")

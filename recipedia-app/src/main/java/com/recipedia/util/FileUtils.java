@@ -19,7 +19,7 @@ public class FileUtils {
             Path filePath = new File(fileUrl).toPath();
             return Files.readAllBytes(filePath);
         } catch (IOException exception) {
-            log.warn("No file found in path " + fileUrl);
+            log.warn("No file found in path {}", fileUrl);
         }
         return null;
     }

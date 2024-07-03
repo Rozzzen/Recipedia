@@ -1,5 +1,5 @@
 package com.recipedia.domain;
 
 public enum RecipeTag {
-    KOREAN, QUICK, VEGAN, BAKERY, PASTA
+    KOREAN, SALAD, QUICK, VEGAN, ITALIAN, VEGETARIAN, SOUP, BAKERY, PASTA, CHICKEN
 }

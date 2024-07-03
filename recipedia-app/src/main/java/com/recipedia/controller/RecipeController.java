@@ -36,6 +36,13 @@ public class RecipeController {
         return ResponseEntity.ok(recipeService.findById(recipeId));
     }
 
+    @DeleteMapping("{recipe-id}")
+    public ResponseEntity<Void> deleteRecipeById(
+            @PathVariable("recipe-id") Long recipeId) {
+        recipeService.deleteRecipe(recipeId);
+        return ResponseEntity.noContent().build();
+    }
+
     @GetMapping
     public ResponseEntity<PageResponse<RecipeResponse>> findAllRecipes(
             @RequestParam(name = "page", defaultValue = "0", required = false) int page,
@@ -53,7 +60,7 @@ public class RecipeController {
         return ResponseEntity.ok(recipeService.findAllRecipesByOwner(page, size, tags, connectedUser));
     }
 
-    @PostMapping(value = "/cover/{recipe-id}", consumes = "multipart/form-data")
+    @PostMapping(value = "/stepImage/{recipe-id}", consumes = "multipart/form-data")
     public ResponseEntity<?> uploadRecipeStepImage(
             @PathVariable("recipe-id") Long recipeId,
             @RequestParam(name = "stepNumber") Integer stepNumber,
@@ -62,6 +69,18 @@ public class RecipeController {
             Authentication connectedUser
     ) {
         recipeService.uploadRecipeStepImage(file, connectedUser, recipeId, stepNumber);
+        return ResponseEntity.accepted().build();
+    }
+
+    @PostMapping(value = "/image/{recipe-id}", consumes = "multipart/form-data")
+    public ResponseEntity<?> uploadRecipeTitleImage(
+            @PathVariable("recipe-id") Long recipeId,
+            @Parameter()
+            @RequestPart("file") MultipartFile file,
+            Authentication connectedUser
+    ) {
+        System.out.println("rofl");
+        recipeService.uploadRecipeTitleImage(file, connectedUser, recipeId);
         return ResponseEntity.accepted().build();
     }
 }

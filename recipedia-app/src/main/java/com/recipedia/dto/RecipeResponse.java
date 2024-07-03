@@ -14,8 +14,9 @@ public record RecipeResponse(
         String description,
         String preparationTime,
         String cookingTime,
+        Double rate,
         List<CookingStep> cookingSteps,
-        List<Ingredient> ingredientList,
-        List<RecipeTag> tags
-) {
+        List<Ingredient> ingredients,
+        List<RecipeTag> tags,
+        byte[] titleImage) {
 }
