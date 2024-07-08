@@ -5,8 +5,10 @@ import jakarta.validation.constraints.NotEmpty;
 
 @Embeddable
 public record Ingredient(
-        @NotEmpty(message = "105")
+
+        @NotEmpty(message = "Each ingredient must have a name")
         String name,
-        @NotEmpty(message = "105")
+
+        @NotEmpty(message = "Each ingredient must have a quantity")
         String quantity) {
 }

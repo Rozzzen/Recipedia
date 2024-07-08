@@ -11,3 +11,5 @@ export { RecipeResponse } from './models/recipe-response';
 export { RegistrationRequest } from './models/registration-request';
 export { ReviewRequest } from './models/review-request';
 export { ReviewResponse } from './models/review-response';
+export { UserRequest } from './models/user-request';
+export { UserResponse } from './models/user-response';

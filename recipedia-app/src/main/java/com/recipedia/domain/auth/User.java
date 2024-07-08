@@ -34,6 +34,8 @@ public class User implements UserDetails, Principal {
     private String firstname;
     private String lastname;
 
+    private String profilePicture;
+
     @Column(unique = true)
     private String email;
 

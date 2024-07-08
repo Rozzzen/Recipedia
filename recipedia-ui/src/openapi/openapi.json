@@ -31,6 +31,93 @@
     }
   ],
   "paths": {
+    "/user": {
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "operationId": "loadUser",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "User"
+        ],
+        "operationId": "saveUser",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int64"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/user/image": {
+      "post": {
+        "tags": [
+          "User"
+        ],
+        "operationId": "uploadProfilePicture",
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "required": [
+                  "file"
+                ],
+                "type": "object",
+                "properties": {
+                  "file": {
+                    "type": "string",
+                    "format": "binary"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/reviews": {
       "post": {
         "tags": [
@@ -149,64 +236,6 @@
                 "schema": {
                   "type": "integer",
                   "format": "int64"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/recipes/stepImage/{recipe-id}": {
-      "post": {
-        "tags": [
-          "Recipe"
-        ],
-        "operationId": "uploadRecipeStepImage",
-        "parameters": [
-          {
-            "name": "recipe-id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int64"
-            }
-          },
-          {
-            "name": "stepNumber",
-            "in": "query",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "multipart/form-data": {
-              "schema": {
-                "required": [
-                  "file"
-                ],
-                "type": "object",
-                "properties": {
-                  "file": {
-                    "type": "string",
-                    "format": "binary"
-                  }
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "type": "object"
                 }
               }
             }
@@ -518,6 +547,21 @@
   },
   "components": {
     "schemas": {
+      "UserRequest": {
+        "required": [
+          "firstname",
+          "lastname"
+        ],
+        "type": "object",
+        "properties": {
+          "firstname": {
+            "type": "string"
+          },
+          "lastname": {
+            "type": "string"
+          }
+        }
+      },
       "ReviewRequest": {
         "required": [
           "comment",
@@ -548,9 +592,6 @@
         "type": "object",
         "properties": {
           "text": {
-            "type": "string"
-          },
-          "image": {
             "type": "string"
           },
           "number": {
@@ -682,6 +723,31 @@
         "properties": {
           "jwtToken": {
             "type": "string"
+          }
+        }
+      },
+      "UserResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "firstname": {
+            "type": "string"
+          },
+          "lastname": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "profilePicture": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "byte"
+            }
           }
         }
       },

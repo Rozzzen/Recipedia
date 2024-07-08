@@ -1,5 +1,6 @@
 package com.recipedia.service;
 
+import com.recipedia.domain.auth.User;
 import jakarta.annotation.Nonnull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -23,13 +24,21 @@ public class FileStorageService {
 
     @Value("${application.file.uploads.image-output-path}")
     private String fileUploadPath;
-    private final String DOT = ".";
 
-    public String saveFile(
+    public String saveRecipeTitleImage(
             @Nonnull MultipartFile sourceFile,
-            @Nonnull Long userId
+            @Nonnull Long userId,
+            @Nonnull Long recipeId
     ) {
-        final String fileUploadSubPath = "users" + separator + userId;
+        final String fileUploadSubPath = "recipes" + separator + userId + separator + recipeId;
+        return uploadFile(sourceFile, fileUploadSubPath);
+    }
+
+    public String saveUserProfilePicture(
+            @Nonnull MultipartFile sourceFile,
+            @Nonnull User user
+    ) {
+        final String fileUploadSubPath = "users" + separator + user.getId() + separator + "pfp";
         return uploadFile(sourceFile, fileUploadSubPath);
     }
 

@@ -41,6 +41,7 @@ export class LoginComponent {
         } else {
           this.errorMsg.push(err.error.errorMsg);
         }
+        window.scroll(0, 0)
       }
     });
   }

@@ -21,7 +21,7 @@ spring:
         writetimeout: 5000
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: create
     show-sql: false
     properties:
       hibernate:
@@ -47,8 +47,9 @@ application:
       activation-url: http://localhost:4200/activate-account
   file:
     uploads:
+      default-profile-picture: ./uploads/users/defaultPfp/dpic.jpeg
+      no-image: ./uploads/recipes/no-img.jpeg
       image-output-path: ./uploads
-
 
 server:
   servlet:

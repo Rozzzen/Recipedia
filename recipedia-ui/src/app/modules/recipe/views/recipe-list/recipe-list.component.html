@@ -1,10 +1,5 @@
 <h2>Recipe list</h2>
 <hr>
-<div class="d-flex justify-content-end mb-3">
-  <a routerLink="/recipes/manage" class="btn btn-outline-success">
-    <i class="fas fa-plus">&nbsp;New recipe</i>
-  </a>
-</div>
 <div class="d-flex justify-content-center gap-5 flex-wrap">
     <recipedia-recipe-card [recipe]="recipe" *ngFor="let recipe of recipeResponse.content"></recipedia-recipe-card>
 </div>

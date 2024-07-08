@@ -7,20 +7,16 @@ import {StrictHttpResponse} from '../../strict-http-response';
 import {RequestBuilder} from '../../request-builder';
 
 
-export interface UploadRecipeStepImage$Params {
-  'recipe-id': number;
-  stepNumber: number;
+export interface UploadProfilePicture$Params {
       body?: {
 'file': Blob;
 }
 }
 
-export function uploadRecipeStepImage(http: HttpClient, rootUrl: string, params: UploadRecipeStepImage$Params, context?: HttpContext): Observable<StrictHttpResponse<{
+export function uploadProfilePicture(http: HttpClient, rootUrl: string, params?: UploadProfilePicture$Params, context?: HttpContext): Observable<StrictHttpResponse<{
 }>> {
-  const rb = new RequestBuilder(rootUrl, uploadRecipeStepImage.PATH, 'post');
+  const rb = new RequestBuilder(rootUrl, uploadProfilePicture.PATH, 'post');
   if (params) {
-    rb.path('recipe-id', params['recipe-id'], {});
-    rb.query('stepNumber', params.stepNumber, {});
     rb.body(params.body, 'multipart/form-data');
   }
 
@@ -35,4 +31,4 @@ export function uploadRecipeStepImage(http: HttpClient, rootUrl: string, params:
   );
 }
 
-uploadRecipeStepImage.PATH = '/recipes/stepImage/{recipe-id}';
+uploadProfilePicture.PATH = '/user/image';

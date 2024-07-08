@@ -5,6 +5,7 @@ import {ActivatedRoute, Router, RouterLink} from "@angular/router";
 import {RecipeService} from "../../../../services/services/recipe.service";
 import {RecipeResponse} from "../../../../services/models/recipe-response";
 import {RecipeRequest} from "../../../../services/models/recipe-request";
+import {FileUploadService} from "../../../../services/file-upload/file-upload.service";
 
 @Component({
   selector: 'recipedia-manage-recipe',
@@ -22,13 +23,13 @@ import {RecipeRequest} from "../../../../services/models/recipe-request";
 export class ManageRecipeComponent implements OnInit {
 
   errorMsg: Array<string> = [];
-  selectedPictureFile: any;
-  selectedPictureString: string | undefined;
   recipeForm: FormGroup;
+  defaultRecipeTitleImage: string = "/uploads/recipes/no-img.jpeg"
 
   constructor(
     private recipeService: RecipeService,
     private router: Router,
+    protected fileUploadService: FileUploadService,
     private activatedRoute: ActivatedRoute,
     private formBuilder: FormBuilder) {
     this.recipeForm = this.formBuilder.group({
@@ -67,12 +68,47 @@ export class ManageRecipeComponent implements OnInit {
               })))
           })
           if (recipe.titleImage) {
-            this.selectedPictureFile = this.base64ToFile(recipe.titleImage.toString())
-            this.selectedPictureString = 'data:image/jpg;base64,' + recipe.titleImage
+            this.fileUploadService.selectedPictureFile = this.fileUploadService.base64ToFile(recipe.titleImage.toString())
+            this.fileUploadService.selectedPictureString = 'data:image/jpg;base64,' + recipe.titleImage
           }
         }
       })
     }
+  }
+
+  saveRecipe() {
+    let recipeResponse: RecipeRequest = this.recipeForm.value;
+    recipeResponse.cookingSteps?.forEach((value, index) => {
+      value.number = index + 1;
+    })
+    this.recipeService.saveRecipe({
+      body: recipeResponse
+    }).subscribe({
+      next: (recipeId) => {
+        if (this.fileUploadService.getSelectedPictureFile()) {
+          this.recipeService.uploadRecipeTitleImage({
+            'recipe-id': recipeId,
+            body: {
+              file: this.fileUploadService.getSelectedPictureFile()
+            }
+          }).subscribe({
+            next: () => {
+              this.router.navigate(['recipes/my-recipes'])
+            },
+            error: err => {
+              this.errorMsg.push(err.error.error)
+              window.scroll(0, 0)
+            }
+          })
+        }
+        else this.router.navigate(['recipes/my-recipes'])
+      },
+      error: err => {
+        console.log(err.errorMsg);
+        this.errorMsg = err.error.validationErrors;
+        window.scroll(0, 0)
+      }
+    })
   }
 
   createStep(): FormGroup {
@@ -110,57 +146,5 @@ export class ManageRecipeComponent implements OnInit {
 
   removeIngredient(index: number): void {
     this.ingredients.removeAt(index);
-  }
-
-  onFileSelected($event: any) {
-    this.selectedPictureFile = $event.target.files[0];
-    console.log(this.selectedPictureFile)
-    if (this.selectedPictureFile) {
-      const reader = new FileReader();
-      reader.onload = () => {
-        this.selectedPictureString = reader.result as string;
-      };
-      reader.readAsDataURL(this.selectedPictureFile);
-    }
-  }
-
-  saveRecipe() {
-    let recipeResponse: RecipeRequest = this.recipeForm.value;
-    recipeResponse.cookingSteps?.forEach((value, index) => {
-      value.number = index + 1;
-    })
-    this.recipeService.saveRecipe({
-      body: recipeResponse
-    }).subscribe({
-      next: (recipeId) => {
-        this.recipeService.uploadRecipeTitleImage({
-          'recipe-id': recipeId,
-          body: {
-            file: this.selectedPictureFile
-          }
-        }).subscribe({
-          next: () => {
-            this.router.navigate(['recipes/my-recipes'])
-          },
-          error: err => this.errorMsg.push(err.error.error)
-        })
-      },
-      error: err => {
-        console.log(err.errorMsg);
-        this.errorMsg = err.error.validationErrors;
-      }
-    })
-  }
-
-  base64ToFile(base64String: string): File {
-    const byteCharacters = atob(base64String);
-    const byteNumbers = new Array(byteCharacters.length);
-    for (let i = 0; i < byteCharacters.length; i++) {
-      byteNumbers[i] = byteCharacters.charCodeAt(i);
-    }
-    const byteArray = new Uint8Array(byteNumbers);
-    const blob = new Blob([byteArray], {type: 'image/jpeg'});
-
-    return new File([blob], 'temporary-image' + base64String.substring(0, 10), {type: 'image/jpeg'});
   }
 }

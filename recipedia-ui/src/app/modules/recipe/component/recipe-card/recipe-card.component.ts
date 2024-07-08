@@ -18,6 +18,7 @@ export class RecipeCardComponent {
 
   private _recipe: RecipeResponse = {};
   private _manageable = false;
+  defaultTitleImage = "/uploads/recipes/no-img.jpeg"
 
   get recipe(): RecipeResponse {
     return this._recipe;
@@ -32,7 +33,7 @@ export class RecipeCardComponent {
     if(this._recipe.titleImage) {
       return 'data:image/jpg;base64,' + this._recipe.titleImage;
     }
-    return 'https://picsum.photos/200/300';
+    return this.defaultTitleImage;
   }
 
   get manageable(): boolean {

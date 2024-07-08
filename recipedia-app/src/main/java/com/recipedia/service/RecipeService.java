@@ -7,7 +7,7 @@ import com.recipedia.dto.PageResponse;
 import com.recipedia.dto.RecipeRequest;
 import com.recipedia.dto.RecipeResponse;
 import com.recipedia.repo.RecipeRepository;
-import com.recipedia.util.mapper.RecipeMapper;
+import com.recipedia.util.EntityMapper;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -27,7 +27,7 @@ import static com.recipedia.util.RecipediaSpecification.withAuthorId;
 @RequiredArgsConstructor
 public class RecipeService {
 
-    private final RecipeMapper recipeMapper;
+    private final EntityMapper recipeMapper;
     private final RecipeRepository recipeRepository;
     private final FileStorageService fileStorageService;
 
@@ -81,22 +81,12 @@ public class RecipeService {
         );
     }
 
-    public void uploadRecipeStepImage(MultipartFile file, Authentication connectedUser, Long recipeId, Integer stepNumber) {
-        Recipe recipe = recipeRepository.findById(recipeId)
-                .orElseThrow(() -> new EntityNotFoundException("No recipe found with id:" + recipeId));
-
-        User user = (User) connectedUser.getPrincipal();
-        var recipeStepImage = fileStorageService.saveFile(file, user.getId());
-        recipe.getCookingSteps().get(stepNumber).setImage(recipeStepImage);
-        recipeRepository.save(recipe);
-    }
-
     public void uploadRecipeTitleImage(MultipartFile file, Authentication connectedUser, Long recipeId) {
         Recipe recipe = recipeRepository.findById(recipeId)
                 .orElseThrow(() -> new EntityNotFoundException("No recipe found with id:" + recipeId));
 
         User user = (User) connectedUser.getPrincipal();
-        var recipeTitleImage = fileStorageService.saveFile(file, user.getId());
+        var recipeTitleImage = fileStorageService.saveRecipeTitleImage(file, user.getId(), recipeId);
         recipe.setTitleImage(recipeTitleImage);
         recipeRepository.save(recipe);
     }

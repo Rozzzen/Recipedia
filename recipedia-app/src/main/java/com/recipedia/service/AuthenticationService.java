@@ -35,8 +35,12 @@ public class AuthenticationService {
     private final EmailService emailService;
     private final AuthenticationManager authManager;
     private final JwtService jwtService;
+
     @Value("${application.mailing.frontend.activation-url}")
     private String activationUrl;
+    @Value("${application.file.uploads.default-profile-picture}")
+    private String defaultProfilePicture;
+
     private final int ACTIVATION_CODE_LENGTH = 6;
 
     public void register(RegistrationRequest request) throws MessagingException {
@@ -50,6 +54,7 @@ public class AuthenticationService {
                 .accountLocked(false)
                 .enabled(false)
                 .roles(List.of(userRole))
+                .profilePicture(defaultProfilePicture)
                 .build();
         userRepository.save(user);
         sendVerificationEmail(user);
@@ -94,7 +99,7 @@ public class AuthenticationService {
         Token savedToken = tokenRepository.findByToken(token)
                 //todo custom exception
                 .orElseThrow(RuntimeException::new);
-        if(LocalDateTime.now().isAfter(savedToken.getExpiresAt())) {
+        if (LocalDateTime.now().isAfter(savedToken.getExpiresAt())) {
             sendVerificationEmail(savedToken.getUser());
             throw new RuntimeException("Activation token has expired. A new Token has been sent");
         }

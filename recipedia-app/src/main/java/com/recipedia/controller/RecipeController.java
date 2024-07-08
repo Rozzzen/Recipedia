@@ -60,18 +60,6 @@ public class RecipeController {
         return ResponseEntity.ok(recipeService.findAllRecipesByOwner(page, size, tags, connectedUser));
     }
 
-    @PostMapping(value = "/stepImage/{recipe-id}", consumes = "multipart/form-data")
-    public ResponseEntity<?> uploadRecipeStepImage(
-            @PathVariable("recipe-id") Long recipeId,
-            @RequestParam(name = "stepNumber") Integer stepNumber,
-            @Parameter()
-            @RequestPart("file") MultipartFile file,
-            Authentication connectedUser
-    ) {
-        recipeService.uploadRecipeStepImage(file, connectedUser, recipeId, stepNumber);
-        return ResponseEntity.accepted().build();
-    }
-
     @PostMapping(value = "/image/{recipe-id}", consumes = "multipart/form-data")
     public ResponseEntity<?> uploadRecipeTitleImage(
             @PathVariable("recipe-id") Long recipeId,
@@ -79,7 +67,6 @@ public class RecipeController {
             @RequestPart("file") MultipartFile file,
             Authentication connectedUser
     ) {
-        System.out.println("rofl");
         recipeService.uploadRecipeTitleImage(file, connectedUser, recipeId);
         return ResponseEntity.accepted().build();
     }

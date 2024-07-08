@@ -6,14 +6,14 @@
   </div>
   <div class="d-flex gap-2">
     <div class="col-3">
-      <img class="rounded-1" width="100%" height="500px" [src]="selectedPictureString || 'https://picsum.photos/200/300'"
+      <img class="rounded-1" width="100%" height="500px" [src]="fileUploadService.getSelectedPictureString() || defaultRecipeTitleImage"
            alt="...">
       <div class="mt-2">
         <input class="form-control"
                type="file"
                id="formFile"
                accept="img/*"
-               (change)="onFileSelected($event)">
+               (change)="fileUploadService.onFileSelected($event)">
       </div>
     </div>
     <div class="col-9">

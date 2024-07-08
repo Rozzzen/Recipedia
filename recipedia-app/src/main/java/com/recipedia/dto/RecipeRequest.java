@@ -13,28 +13,28 @@ import java.util.List;
 public record RecipeRequest(
         Long id,
 
-        @NotNull(message = "100")
-        @NotEmpty(message = "100")
+        @NotNull(message = "Title should not be empty")
+        @NotEmpty(message = "Title should not be empty")
         String title,
 
-        @NotNull(message = "101")
-        @NotEmpty(message = "101")
+        @NotNull(message = "Description should not be empty")
+        @NotEmpty(message = "Description should not be empty")
         String description,
 
-        @NotNull(message = "102")
-        @NotEmpty(message = "102")
-        @Pattern(regexp = "^(?:[1-5]?\\d(?:\\.\\d+)?|60(?:\\.0+)?) (minutes|minute|mins|min|hours|hour|hrs|hr)$", message = "102")
+        @NotNull(message = "Preparation time should not be empty")
+        @NotEmpty(message = "Preparation time should not be empty")
+        @Pattern(regexp = "^(?:[1-5]?\\d(?:\\.\\d+)?|60(?:\\.0+)?) (minutes|minute|mins|min|hours|hour|hrs|hr)$", message = "Preparation time should be a valid duration in minutes or hours")
         String preparationTime,
 
-        @NotNull(message = "103")
-        @NotEmpty(message = "103")
-        @Pattern(regexp = "^(?:[1-5]?\\d(?:\\.\\d+)?|60(?:\\.0+)?) (minutes|minute|mins|min|hours|hour|hrs|hr)$", message = "103")
+        @NotNull(message = "Cooking time should not be empty")
+        @NotEmpty(message = "Cooking time should not be empty")
+        @Pattern(regexp = "^(?:[1-5]?\\d(?:\\.\\d+)?|60(?:\\.0+)?) (minutes|minute|mins|min|hours|hour|hrs|hr)$", message = "Cooking time should be a valid duration in minutes or hours")
         String cookingTime,
 
-        @NotEmpty(message = "104")
+        @NotEmpty(message = "Cooking steps should not be empty")
         List<@Valid CookingStep> cookingSteps,
 
-        @NotEmpty(message = "105")
+        @NotEmpty(message = "Ingredients should not be empty")
         List<@Valid Ingredient> ingredients,
 
         List<RecipeTag> tags

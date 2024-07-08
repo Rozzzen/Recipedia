@@ -9,7 +9,7 @@ import com.recipedia.dto.ReviewResponse;
 import com.recipedia.exception.OperationNotPermittedException;
 import com.recipedia.repo.RecipeRepository;
 import com.recipedia.repo.ReviewRepository;
-import com.recipedia.util.mapper.ReviewMapper;
+import com.recipedia.util.EntityMapper;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -25,7 +25,7 @@ import java.util.Objects;
 @RequiredArgsConstructor
 public class ReviewService {
     private final RecipeRepository recipeRepository;
-    private final ReviewMapper reviewMapper;
+    private final EntityMapper reviewMapper;
     private final ReviewRepository reviewRepository;
 
     public Long save(ReviewRequest request, Authentication connectedUser) {

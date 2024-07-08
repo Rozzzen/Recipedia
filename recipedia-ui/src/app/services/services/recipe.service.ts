@@ -16,7 +16,6 @@ import {findRecipeById, FindRecipeById$Params} from '../fn/recipe/find-recipe-by
 import {PageResponseRecipeResponse} from '../models/page-response-recipe-response';
 import {RecipeResponse} from '../models/recipe-response';
 import {saveRecipe, SaveRecipe$Params} from '../fn/recipe/save-recipe';
-import {uploadRecipeStepImage, UploadRecipeStepImage$Params} from '../fn/recipe/upload-recipe-step-image';
 import {uploadRecipeTitleImage, UploadRecipeTitleImage$Params} from '../fn/recipe/upload-recipe-title-image';
 
 @Injectable({ providedIn: 'root' })
@@ -72,35 +71,6 @@ export class RecipeService extends BaseService {
   saveRecipe(params: SaveRecipe$Params, context?: HttpContext): Observable<number> {
     return this.saveRecipe$Response(params, context).pipe(
       map((r: StrictHttpResponse<number>): number => r.body)
-    );
-  }
-
-  /** Path part for operation `uploadRecipeStepImage()` */
-  static readonly UploadRecipeStepImagePath = '/recipes/stepImage/{recipe-id}';
-
-  /**
-   * This method provides access to the full `HttpResponse`, allowing access to response headers.
-   * To access only the response body, use `uploadRecipeStepImage()` instead.
-   *
-   * This method sends `multipart/form-data` and handles request body of type `multipart/form-data`.
-   */
-  uploadRecipeStepImage$Response(params: UploadRecipeStepImage$Params, context?: HttpContext): Observable<StrictHttpResponse<{
-}>> {
-    return uploadRecipeStepImage(this.http, this.rootUrl, params, context);
-  }
-
-  /**
-   * This method provides access only to the response body.
-   * To access the full response (for headers, for example), `uploadRecipeStepImage$Response()` instead.
-   *
-   * This method sends `multipart/form-data` and handles request body of type `multipart/form-data`.
-   */
-  uploadRecipeStepImage(params: UploadRecipeStepImage$Params, context?: HttpContext): Observable<{
-}> {
-    return this.uploadRecipeStepImage$Response(params, context).pipe(
-      map((r: StrictHttpResponse<{
-}>): {
-} => r.body)
     );
   }
 

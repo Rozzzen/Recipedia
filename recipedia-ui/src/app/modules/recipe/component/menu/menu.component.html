@@ -21,8 +21,17 @@
       <form class="d-flex gap-2 align-items-center" role="search">
         <input class="form-control" type="search" placeholder="Find a recipe" aria-label="Search">
         <button class="btn btn-outline-success" type="submit"><i class="fas fa-search"></i></button>
-        <span>Welcome</span>
-        <span class="text-capitalize fw-bold">rzn</span>
+        <div class="dropdown d-flex gap-1 align-items-center">
+          <button class="btn btn-plain" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+            {{ currentUser.firstname }}
+          </button>
+          <img [src]="profilePicture" width="40px" height="40px"
+               class="rounded-2" style="cursor: pointer;" loading="eager"
+               id="imgDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" alt="...">
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item pointer-event" style="cursor: pointer;" (click)="manageAccount()">Manage account</a></li>
+          </ul>
+        </div>
         <button class="btn btn-link" type="submit" (click)="logout()"><i class="fas fa-door-open"></i></button>
       </form>
     </div>
