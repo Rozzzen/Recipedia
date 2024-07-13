@@ -36,14 +36,20 @@ public class UserService implements UserDetailsService {
     }
 
     public UserResponse getAuthenticatedUser(Authentication connectedUser) {
-        User principal = (User) connectedUser.getPrincipal();
-        User user = userRepository.findById(principal.getId()).orElseThrow(() -> new UsernameNotFoundException("user not found: " + principal.getId()));
-
+        User user = (User) connectedUser.getPrincipal();
         return userMapper.toUserResponse(user);
     }
 
-    public Long save(UserRequest request) {
-        User user = userMapper.toUser(request);
+    public UserResponse getUser(Long id) {
+        User user = userRepository.findById(id).orElseThrow(() -> new UsernameNotFoundException("user not found: " + id));
+        return userMapper.toUserResponse(user);
+    }
+
+    public Long update(UserRequest request) {
+        User user = userRepository.findById(request.id())
+                .orElseThrow(() -> new UsernameNotFoundException("user not found: " + request.id()));
+        user.setFirstname(request.firstname());
+        user.setLastname(request.lastname());
         return userRepository.save(user).getId();
     }
 }

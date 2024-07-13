@@ -7,8 +7,6 @@ import com.recipedia.dto.*;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import java.util.Objects;
-
 @Service
 public class EntityMapper {
 
@@ -32,6 +30,7 @@ public class EntityMapper {
     public RecipeResponse toRecipeResponse(Recipe recipe) {
         return RecipeResponse.builder()
                 .id(recipe.getId())
+                .createdBy(recipe.getCreatedBy())
                 .title(recipe.getTitle())
                 .description(recipe.getDescription())
                 .rate(recipe.getRate())
@@ -54,11 +53,11 @@ public class EntityMapper {
                 .build();
     }
 
-    public ReviewResponse toReviewResponse(Review review, Long id) {
+    public ReviewResponse toReviewResponse(Review review, UserResponse user) {
         return ReviewResponse.builder()
                 .rate(review.getRate())
                 .comment(review.getComment())
-                .ownFeedback(Objects.equals(review.getCreatedBy(), id))
+                .createdBy(user)
                 .build();
     }
 
@@ -72,12 +71,4 @@ public class EntityMapper {
                 .build();
     }
 
-    public User toUser(UserRequest userRequest) {
-        return User.builder()
-                .id(userRequest.id())
-                .firstname(userRequest.firstname())
-                .lastname(userRequest.lastname())
-                .email(userRequest.email())
-                .build();
-    }
 }

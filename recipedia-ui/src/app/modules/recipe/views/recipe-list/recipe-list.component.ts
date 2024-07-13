@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {RecipeService} from "../../../../services/services/recipe.service";
-import {Router, RouterLink} from "@angular/router";
+import {RouterLink} from "@angular/router";
 import {PageResponseRecipeResponse} from "../../../../services/models/page-response-recipe-response";
-import {NgForOf} from "@angular/common";
+import {NgForOf, NgIf} from "@angular/common";
 import {RecipeCardComponent} from "../../component/recipe-card/recipe-card.component";
 
 @Component({
@@ -11,7 +11,8 @@ import {RecipeCardComponent} from "../../component/recipe-card/recipe-card.compo
   imports: [
     NgForOf,
     RecipeCardComponent,
-    RouterLink
+    RouterLink,
+    NgIf
   ],
   templateUrl: './recipe-list.component.html',
   styleUrl: './recipe-list.component.scss'
@@ -22,8 +23,7 @@ export class RecipeListComponent implements OnInit {
   page: number = 0;
   size: number = 5;
 
-  constructor(private recipeService: RecipeService,
-              private router: Router) {
+  constructor(private recipeService: RecipeService) {
   }
 
   ngOnInit(): void {
@@ -42,6 +42,11 @@ export class RecipeListComponent implements OnInit {
     })
   }
 
+  goToPage(page: number) {
+    this.page = page;
+    this.findAllRecipes();
+  }
+
   goToFirstPage() {
     this.page = 0;
     this.findAllRecipes();
@@ -52,8 +57,8 @@ export class RecipeListComponent implements OnInit {
     this.findAllRecipes();
   }
 
-  goToPage(number: number) {
-    this.page = number;
+  goToLastPage() {
+    this.page = this.recipeResponse.totalPages as number - 1;
     this.findAllRecipes();
   }
 
@@ -62,12 +67,7 @@ export class RecipeListComponent implements OnInit {
     this.findAllRecipes();
   }
 
-  goToLastPage() {
-    this.page = this.recipeResponse.totalPages as number - 1;
-    this.findAllRecipes();
-  }
-
-  isLastPage(): boolean {
-    return this.page == this.recipeResponse.totalPages as number - 1;
+  get isLastPage() {
+    return this.page === this.recipeResponse.totalPages as number - 1;
   }
 }

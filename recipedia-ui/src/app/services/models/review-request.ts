@@ -1,7 +1,7 @@
 /* tslint:disable */
 /* eslint-disable */
 export interface ReviewRequest {
-  comment: string;
+  comment?: string;
   rate?: number;
   recipeId: number;
 }

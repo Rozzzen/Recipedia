@@ -10,6 +10,7 @@ import java.util.List;
 @Builder
 public record RecipeResponse(
         Long id,
+        Long createdBy,
         String title,
         String description,
         String preparationTime,

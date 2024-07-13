@@ -49,6 +49,7 @@ public class RecipeService {
         List<RecipeResponse> recipeResponse = recipes.stream()
                 .map(recipeMapper::toRecipeResponse)
                 .toList();
+
         return new PageResponse<>(
                 recipeResponse,
                 recipes.getNumber(),

@@ -13,6 +13,5 @@ public class ReviewResponse {
 
     private Double rate;
     private String comment;
-    private boolean ownFeedback;
-
+    private UserResponse createdBy;
 }

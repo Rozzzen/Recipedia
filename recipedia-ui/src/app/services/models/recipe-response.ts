@@ -6,6 +6,7 @@ import {Ingredient} from '../models/ingredient';
 export interface RecipeResponse {
   cookingSteps?: Array<CookingStep>;
   cookingTime?: string;
+  createdBy?: number;
   description?: string;
   id?: number;
   ingredients?: Array<Ingredient>;

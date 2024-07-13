@@ -10,7 +10,7 @@ import {ApiConfiguration} from '../api-configuration';
 import {StrictHttpResponse} from '../strict-http-response';
 
 import {findAllReviewsByRecipe, FindAllReviewsByRecipe$Params} from '../fn/review/find-all-reviews-by-recipe';
-import {PageResponseReviewResponse} from '../models/page-response-review-response';
+import {ReviewResponse} from '../models/review-response';
 import {saveReview, SaveReview$Params} from '../fn/review/save-review';
 
 @Injectable({ providedIn: 'root' })
@@ -45,7 +45,7 @@ export class ReviewService extends BaseService {
   }
 
   /** Path part for operation `findAllReviewsByRecipe()` */
-  static readonly FindAllReviewsByRecipePath = '/reviews/recipe/{recipe-id}';
+  static readonly FindAllReviewsByRecipePath = '/reviews/{recipe-id}';
 
   /**
    * This method provides access to the full `HttpResponse`, allowing access to response headers.
@@ -53,7 +53,7 @@ export class ReviewService extends BaseService {
    *
    * This method doesn't expect any request body.
    */
-  findAllReviewsByRecipe$Response(params: FindAllReviewsByRecipe$Params, context?: HttpContext): Observable<StrictHttpResponse<PageResponseReviewResponse>> {
+  findAllReviewsByRecipe$Response(params: FindAllReviewsByRecipe$Params, context?: HttpContext): Observable<StrictHttpResponse<Array<ReviewResponse>>> {
     return findAllReviewsByRecipe(this.http, this.rootUrl, params, context);
   }
 
@@ -63,9 +63,9 @@ export class ReviewService extends BaseService {
    *
    * This method doesn't expect any request body.
    */
-  findAllReviewsByRecipe(params: FindAllReviewsByRecipe$Params, context?: HttpContext): Observable<PageResponseReviewResponse> {
+  findAllReviewsByRecipe(params: FindAllReviewsByRecipe$Params, context?: HttpContext): Observable<Array<ReviewResponse>> {
     return this.findAllReviewsByRecipe$Response(params, context).pipe(
-      map((r: StrictHttpResponse<PageResponseReviewResponse>): PageResponseReviewResponse => r.body)
+      map((r: StrictHttpResponse<Array<ReviewResponse>>): Array<ReviewResponse> => r.body)
     );
   }
 

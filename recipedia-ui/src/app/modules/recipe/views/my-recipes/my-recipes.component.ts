@@ -1,5 +1,5 @@
-import {Component} from '@angular/core';
-import {NgForOf} from "@angular/common";
+import {Component, OnInit} from '@angular/core';
+import {NgForOf, NgIf} from "@angular/common";
 import {RecipeCardComponent} from "../../component/recipe-card/recipe-card.component";
 import {PageResponseRecipeResponse} from "../../../../services/models/page-response-recipe-response";
 import {RecipeService} from "../../../../services/services/recipe.service";
@@ -12,12 +12,13 @@ import {RecipeResponse} from "../../../../services/models/recipe-response";
   imports: [
     NgForOf,
     RecipeCardComponent,
-    RouterLink
+    RouterLink,
+    NgIf
   ],
   templateUrl: './my-recipes.component.html',
   styleUrl: './my-recipes.component.scss'
 })
-export class MyRecipesComponent {
+export class MyRecipesComponent implements OnInit{
 
   recipeResponse: PageResponseRecipeResponse = {};
   page: number = 0;

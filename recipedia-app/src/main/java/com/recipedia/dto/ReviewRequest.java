@@ -1,7 +1,10 @@
 package com.recipedia.dto;
 
 
-import jakarta.validation.constraints.*;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 
 public record ReviewRequest(
 
@@ -10,9 +13,6 @@ public record ReviewRequest(
         @Max(value = 5, message = "Rate should not be greater than 5")
         Double rate,
 
-        @NotNull(message = "Comment should not be empty")
-        @NotEmpty(message = "Comment should not be empty")
-        @NotBlank(message = "Comment should not be empty")
         String comment,
 
         @NotNull(message = "Recipe ID should not be empty")

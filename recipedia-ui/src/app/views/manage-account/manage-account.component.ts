@@ -32,7 +32,7 @@ export class ManageAccountComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.userService.loadUser().subscribe({
+    this.userService.getAuthenticatedUser().subscribe({
       next: user => {
         this.accountForm = this.formBuilder.group({
           id: user.id,
@@ -49,12 +49,11 @@ export class ManageAccountComponent implements OnInit {
   }
 
   updateAccount() {
-    console.log(this.accountForm.value)
-    this.userService.saveUser({
+    this.userService.updateUser({
       body: this.accountForm.value
     }).subscribe({
       next: () => {
-        if (this.fileUploadService.selectedPictureFile) {
+        if (this.fileUploadService.getSelectedPictureFile()) {
           this.userService.uploadProfilePicture({
             body: {
               file: this.fileUploadService.getSelectedPictureFile()

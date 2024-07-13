@@ -1,0 +1,70 @@
+<div class="d-flex justify-content-center">
+  <div class="card"
+       style="width: 40rem;"
+  >
+    <div class="card-header">
+      <h1 class="text-center">{{ recipe.title }}</h1>
+    </div>
+    <div class="d-flex gap-1 justify-content-center">
+      <img class="rounded-1" width="100%" height="300px" [src]="profilePicture"
+           alt="...">
+    </div>
+    <div class="card-body overflow-scroll">
+      <p class="card-text">{{ recipe.description }}</p>
+      <hr>
+      <p style="font-size: 2rem" class="card-text">Ingredients</p>
+      <div class="justify-content-start d-flex gap-3" *ngFor="let ingredient of recipe.ingredients; let i = index">
+        <p class="card-text">{{ ingredient.name }}</p>
+        <p class="card-text">{{ ingredient.quantity }}</p>
+      </div>
+      <hr>
+      <p style="font-size: 2rem" class="card-text">Cooking steps</p>
+      <div class="row" *ngFor="let cookingStep of recipe.cookingSteps; let i = index">
+        <div class="col-1"><p style="font-size: 1.5rem" class="card-text">{{ cookingStep.number }}</p></div>
+        <div class="col-11"><p style="font-size: 1.5rem" class="card-text">{{ cookingStep.text }}</p></div>
+      </div>
+      <hr>
+      <p  *ngIf="authUser.id != recipe.createdBy && !isReviewed()"
+          style="font-size: 2rem" class="card-text text-center">Leave a review</p>
+      <div class="card-body overflow-scroll"
+           *ngIf="authUser.id != recipe.createdBy && !isReviewed()">
+        <form (ngSubmit)="saveReview()">
+          <div class="rating">
+            <input [(ngModel)]="review.rate" type="radio" id="star5" name="rating" value="5">
+            <label for="star5">&#9733;</label>
+            <input [(ngModel)]="review.rate" type="radio" id="star4" name="rating" value="4">
+            <label for="star4">&#9733;</label>
+            <input [(ngModel)]="review.rate" type="radio" id="star3" name="rating" value="3">
+            <label for="star3">&#9733;</label>
+            <input [(ngModel)]="review.rate" type="radio" id="star2" name="rating" value="2">
+            <label for="star2">&#9733;</label>
+            <input [(ngModel)]="review.rate" type="radio" id="star1" name="rating" value="1">
+            <label for="star1">&#9733;</label>
+          </div>
+          <div>
+            <textarea [(ngModel)]="review.comment" name="comment" rows="2" class="form-control"
+                      id="comment"
+                      placeholder="commentary"></textarea>
+          </div>
+          <button type="submit" class="btn btn-outline-primary mt-3">
+            <i class="fas fa-save">&nbsp;Submit</i></button>
+        </form>
+        <hr>
+      </div>
+      <p *ngIf="reviews?.length" style="font-size: 2rem" class="card-text text-center">Reviews</p>
+      <p *ngIf="!reviews?.length" class="text-center" >No reviews...</p>
+      <div *ngFor="let review of this.reviews" class="mb-4">
+        <div class="dropdown d-flex gap-2 align-items-center">
+          <img [src]="'data:image/jpg;base64,' + this.review.createdBy?.profilePicture?.toString()" width="40px"
+               height="40px"
+               class="rounded-2" style="cursor: pointer;" loading="eager"
+               id="imgDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" alt="...">
+          <p>{{ this.review.createdBy?.firstname }}</p>
+          <p>{{ this.review.createdBy?.lastname }}</p>
+        </div>
+        <recipedia-rating [rating]="review.rate || 0"></recipedia-rating>
+        <p class="card-text mt-2">{{ review.comment }}</p>
+      </div>
+    </div>
+  </div>
+</div>

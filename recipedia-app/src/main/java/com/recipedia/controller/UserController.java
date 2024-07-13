@@ -30,18 +30,23 @@ public class UserController {
         return ResponseEntity.accepted().build();
     }
 
-    @PostMapping
-    public ResponseEntity<Long> saveUser(
+    @PatchMapping
+    public ResponseEntity<Long> updateUser(
             @Valid @RequestBody UserRequest request) {
-        return ResponseEntity.ok(userService.save(request));
+        return ResponseEntity.ok(userService.update(request));
     }
 
     @GetMapping
-    public ResponseEntity<UserResponse> loadUser(
-            Authentication connectedUser
-    ) {
+    public ResponseEntity<UserResponse> getAuthenticatedUser(
+            Authentication connectedUser) {
         return ResponseEntity.ok(
-                userService.getAuthenticatedUser(connectedUser)
-        );
+                userService.getAuthenticatedUser(connectedUser));
+    }
+
+    @GetMapping("{id}")
+    public ResponseEntity<UserResponse> getUser(
+            @PathVariable("id") Long userId) {
+        return ResponseEntity.ok(
+                userService.getUser(userId));
     }
 }

@@ -6,16 +6,14 @@ import {filter, map} from 'rxjs/operators';
 import {StrictHttpResponse} from '../../strict-http-response';
 import {RequestBuilder} from '../../request-builder';
 
-import {UserRequest} from '../../models/user-request';
+import {UserResponse} from '../../models/user-response';
 
-export interface SaveUser$Params {
-      body: UserRequest
+export interface GetAuthenticatedUser$Params {
 }
 
-export function saveUser(http: HttpClient, rootUrl: string, params: SaveUser$Params, context?: HttpContext): Observable<StrictHttpResponse<number>> {
-  const rb = new RequestBuilder(rootUrl, saveUser.PATH, 'post');
+export function getAuthenticatedUser(http: HttpClient, rootUrl: string, params?: GetAuthenticatedUser$Params, context?: HttpContext): Observable<StrictHttpResponse<UserResponse>> {
+  const rb = new RequestBuilder(rootUrl, getAuthenticatedUser.PATH, 'get');
   if (params) {
-    rb.body(params.body, 'application/json');
   }
 
   return http.request(
@@ -23,9 +21,9 @@ export function saveUser(http: HttpClient, rootUrl: string, params: SaveUser$Par
   ).pipe(
     filter((r: any): r is HttpResponse<any> => r instanceof HttpResponse),
     map((r: HttpResponse<any>) => {
-      return (r as HttpResponse<any>).clone({ body: parseFloat(String((r as HttpResponse<any>).body)) }) as StrictHttpResponse<number>;
+      return r as StrictHttpResponse<UserResponse>;
     })
   );
 }
 
-saveUser.PATH = '/user';
+getAuthenticatedUser.PATH = '/user';

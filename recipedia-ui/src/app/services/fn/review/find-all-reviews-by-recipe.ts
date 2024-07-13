@@ -6,20 +6,16 @@ import {filter, map} from 'rxjs/operators';
 import {StrictHttpResponse} from '../../strict-http-response';
 import {RequestBuilder} from '../../request-builder';
 
-import {PageResponseReviewResponse} from '../../models/page-response-review-response';
+import {ReviewResponse} from '../../models/review-response';
 
 export interface FindAllReviewsByRecipe$Params {
   'recipe-id': number;
-  page?: number;
-  size?: number;
 }
 
-export function findAllReviewsByRecipe(http: HttpClient, rootUrl: string, params: FindAllReviewsByRecipe$Params, context?: HttpContext): Observable<StrictHttpResponse<PageResponseReviewResponse>> {
+export function findAllReviewsByRecipe(http: HttpClient, rootUrl: string, params: FindAllReviewsByRecipe$Params, context?: HttpContext): Observable<StrictHttpResponse<Array<ReviewResponse>>> {
   const rb = new RequestBuilder(rootUrl, findAllReviewsByRecipe.PATH, 'get');
   if (params) {
     rb.path('recipe-id', params['recipe-id'], {});
-    rb.query('page', params.page, {});
-    rb.query('size', params.size, {});
   }
 
   return http.request(
@@ -27,9 +23,9 @@ export function findAllReviewsByRecipe(http: HttpClient, rootUrl: string, params
   ).pipe(
     filter((r: any): r is HttpResponse<any> => r instanceof HttpResponse),
     map((r: HttpResponse<any>) => {
-      return r as StrictHttpResponse<PageResponseReviewResponse>;
+      return r as StrictHttpResponse<Array<ReviewResponse>>;
     })
   );
 }
 
-findAllReviewsByRecipe.PATH = '/reviews/recipe/{recipe-id}';
+findAllReviewsByRecipe.PATH = '/reviews/{recipe-id}';

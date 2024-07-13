@@ -6,14 +6,16 @@ import {filter, map} from 'rxjs/operators';
 import {StrictHttpResponse} from '../../strict-http-response';
 import {RequestBuilder} from '../../request-builder';
 
-import {UserResponse} from '../../models/user-response';
+import {UserRequest} from '../../models/user-request';
 
-export interface LoadUser$Params {
+export interface UpdateUser$Params {
+      body: UserRequest
 }
 
-export function loadUser(http: HttpClient, rootUrl: string, params?: LoadUser$Params, context?: HttpContext): Observable<StrictHttpResponse<UserResponse>> {
-  const rb = new RequestBuilder(rootUrl, loadUser.PATH, 'get');
+export function updateUser(http: HttpClient, rootUrl: string, params: UpdateUser$Params, context?: HttpContext): Observable<StrictHttpResponse<number>> {
+  const rb = new RequestBuilder(rootUrl, updateUser.PATH, 'patch');
   if (params) {
+    rb.body(params.body, 'application/json');
   }
 
   return http.request(
@@ -21,9 +23,9 @@ export function loadUser(http: HttpClient, rootUrl: string, params?: LoadUser$Pa
   ).pipe(
     filter((r: any): r is HttpResponse<any> => r instanceof HttpResponse),
     map((r: HttpResponse<any>) => {
-      return r as StrictHttpResponse<UserResponse>;
+      return (r as HttpResponse<any>).clone({ body: parseFloat(String((r as HttpResponse<any>).body)) }) as StrictHttpResponse<number>;
     })
   );
 }
 
-loadUser.PATH = '/user';
+updateUser.PATH = '/user';

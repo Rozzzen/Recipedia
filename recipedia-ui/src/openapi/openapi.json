@@ -31,55 +31,6 @@
     }
   ],
   "paths": {
-    "/user": {
-      "get": {
-        "tags": [
-          "User"
-        ],
-        "operationId": "loadUser",
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/UserResponse"
-                }
-              }
-            }
-          }
-        }
-      },
-      "post": {
-        "tags": [
-          "User"
-        ],
-        "operationId": "saveUser",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/UserRequest"
-              }
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "type": "integer",
-                  "format": "int64"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
     "/user/image": {
       "post": {
         "tags": [
@@ -352,7 +303,87 @@
         }
       }
     },
-    "/reviews/recipe/{recipe-id}": {
+    "/user": {
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "operationId": "getAuthenticatedUser",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "User"
+        ],
+        "operationId": "updateUser",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int64"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/user/{id}": {
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "operationId": "getUser",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/reviews/{recipe-id}": {
       "get": {
         "tags": [
           "Review"
@@ -367,26 +398,6 @@
               "type": "integer",
               "format": "int64"
             }
-          },
-          {
-            "name": "page",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "integer",
-              "format": "int32",
-              "default": 0
-            }
-          },
-          {
-            "name": "size",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "integer",
-              "format": "int32",
-              "default": 10
-            }
           }
         ],
         "responses": {
@@ -395,7 +406,10 @@
             "content": {
               "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/PageResponseReviewResponse"
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ReviewResponse"
+                  }
                 }
               }
             }
@@ -547,24 +561,8 @@
   },
   "components": {
     "schemas": {
-      "UserRequest": {
-        "required": [
-          "firstname",
-          "lastname"
-        ],
-        "type": "object",
-        "properties": {
-          "firstname": {
-            "type": "string"
-          },
-          "lastname": {
-            "type": "string"
-          }
-        }
-      },
       "ReviewRequest": {
         "required": [
-          "comment",
           "recipeId"
         ],
         "type": "object",
@@ -726,6 +724,29 @@
           }
         }
       },
+      "UserRequest": {
+        "required": [
+          "email",
+          "firstname",
+          "lastname"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "firstname": {
+            "type": "string"
+          },
+          "lastname": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          }
+        }
+      },
       "UserResponse": {
         "type": "object",
         "properties": {
@@ -751,39 +772,6 @@
           }
         }
       },
-      "PageResponseReviewResponse": {
-        "type": "object",
-        "properties": {
-          "content": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/ReviewResponse"
-            }
-          },
-          "number": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "size": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "totalElements": {
-            "type": "integer",
-            "format": "int64"
-          },
-          "totalPages": {
-            "type": "integer",
-            "format": "int64"
-          },
-          "first": {
-            "type": "boolean"
-          },
-          "last": {
-            "type": "boolean"
-          }
-        }
-      },
       "ReviewResponse": {
         "type": "object",
         "properties": {
@@ -794,8 +782,8 @@
           "comment": {
             "type": "string"
           },
-          "ownFeedback": {
-            "type": "boolean"
+          "createdBy": {
+            "$ref": "#/components/schemas/UserResponse"
           }
         }
       },
@@ -836,6 +824,10 @@
         "type": "object",
         "properties": {
           "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "createdBy": {
             "type": "integer",
             "format": "int64"
           },

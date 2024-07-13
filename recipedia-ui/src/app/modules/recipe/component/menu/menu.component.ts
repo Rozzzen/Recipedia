@@ -36,7 +36,7 @@ export class MenuComponent implements OnInit {
         link.classList.add('active');
       });
     });
-    this.userService.loadUser().subscribe({
+    this.userService.getAuthenticatedUser().subscribe({
       next: value => {
         this.currentUser = value;
         this.profilePicture = 'data:image/jpg;base64,' + this.currentUser.profilePicture?.toString();

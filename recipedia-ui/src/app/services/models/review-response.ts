@@ -1,7 +1,9 @@
 /* tslint:disable */
 /* eslint-disable */
+import {UserResponse} from '../models/user-response';
+
 export interface ReviewResponse {
   comment?: string;
-  ownFeedback?: boolean;
+  createdBy?: UserResponse;
   rate?: number;
 }
