@@ -5,6 +5,7 @@ import {PageResponseRecipeResponse} from "../../../../services/models/page-respo
 import {RecipeService} from "../../../../services/services/recipe.service";
 import {Router, RouterLink} from "@angular/router";
 import {RecipeResponse} from "../../../../services/models/recipe-response";
+import {SearchBarService} from "../../../../services/search-bar/search-bar.service";
 
 @Component({
   selector: 'recipedia-my-recipes',
@@ -18,24 +19,29 @@ import {RecipeResponse} from "../../../../services/models/recipe-response";
   templateUrl: './my-recipes.component.html',
   styleUrl: './my-recipes.component.scss'
 })
-export class MyRecipesComponent implements OnInit{
+export class MyRecipesComponent implements OnInit {
 
   recipeResponse: PageResponseRecipeResponse = {};
   page: number = 0;
   size: number = 5;
 
   constructor(private recipeService: RecipeService,
-              private router: Router) {
+              private router: Router,
+              protected searchBarService: SearchBarService) {
   }
 
   ngOnInit(): void {
     this.findAllRecipes();
+    this.searchBarService.searchBarUpdate.subscribe(() => {
+      this.findAllRecipes()
+    })
   }
 
   private findAllRecipes() {
     this.recipeService.findAllRecipesByAuthor({
         page: this.page,
-        size: this.size
+        size: this.size,
+        search: this.searchBarService.currentSearchQuery
       }
     ).subscribe({
       next: (recipes) => {

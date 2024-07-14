@@ -4,6 +4,7 @@ import {RouterLink} from "@angular/router";
 import {PageResponseRecipeResponse} from "../../../../services/models/page-response-recipe-response";
 import {NgForOf, NgIf} from "@angular/common";
 import {RecipeCardComponent} from "../../component/recipe-card/recipe-card.component";
+import {SearchBarService} from "../../../../services/search-bar/search-bar.service";
 
 @Component({
   selector: 'recipedia-recipe-list',
@@ -23,17 +24,22 @@ export class RecipeListComponent implements OnInit {
   page: number = 0;
   size: number = 5;
 
-  constructor(private recipeService: RecipeService) {
+  constructor(private recipeService: RecipeService,
+              protected searchBarService: SearchBarService) {
   }
 
   ngOnInit(): void {
     this.findAllRecipes();
+    this.searchBarService.searchBarUpdate.subscribe(() => {
+      this.findAllRecipes()
+    })
   }
 
   private findAllRecipes() {
     this.recipeService.findAllRecipes({
         page: this.page,
-        size: this.size
+        size: this.size,
+        search: this.searchBarService.currentSearchQuery
       }
     ).subscribe({
       next: (recipes) => {

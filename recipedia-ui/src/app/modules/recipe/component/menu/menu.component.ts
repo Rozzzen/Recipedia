@@ -3,6 +3,7 @@ import {Router, RouterLink} from "@angular/router";
 import {UserService} from "../../../../services/services/user.service";
 import {NgOptimizedImage} from "@angular/common";
 import {UserResponse} from "../../../../services/models/user-response";
+import {SearchBarService} from "../../../../services/search-bar/search-bar.service";
 
 @Component({
   selector: 'recipedia-menu',
@@ -22,6 +23,7 @@ export class MenuComponent implements OnInit {
   constructor(
     private userService: UserService,
     private router: Router,
+    private searchBarService: SearchBarService
   ) {
   }
 
@@ -42,6 +44,10 @@ export class MenuComponent implements OnInit {
         this.profilePicture = 'data:image/jpg;base64,' + this.currentUser.profilePicture?.toString();
       }
     })
+  }
+
+  onSearch($event: any) {
+    this.searchBarService.updateSearchQuery($event);
   }
 
   manageAccount() {

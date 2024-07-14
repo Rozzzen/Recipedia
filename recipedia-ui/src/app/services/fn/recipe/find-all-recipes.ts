@@ -11,6 +11,7 @@ import {PageResponseRecipeResponse} from '../../models/page-response-recipe-resp
 export interface FindAllRecipes$Params {
   page?: number;
   size?: number;
+  search?: string;
   tags?: Array<'KOREAN' | 'SALAD' | 'QUICK' | 'VEGAN' | 'ITALIAN' | 'VEGETARIAN' | 'SOUP' | 'BAKERY' | 'PASTA' | 'CHICKEN'>;
 }
 
@@ -19,6 +20,7 @@ export function findAllRecipes(http: HttpClient, rootUrl: string, params?: FindA
   if (params) {
     rb.query('page', params.page, {});
     rb.query('size', params.size, {});
+    rb.query('search', params.search, {});
     rb.query('tags', params.tags, {});
   }
 

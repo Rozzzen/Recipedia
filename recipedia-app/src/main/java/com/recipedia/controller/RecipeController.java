@@ -47,17 +47,19 @@ public class RecipeController {
     public ResponseEntity<PageResponse<RecipeResponse>> findAllRecipes(
             @RequestParam(name = "page", defaultValue = "0", required = false) int page,
             @RequestParam(name = "size", defaultValue = "10", required = false) int size,
+            @RequestParam(name = "search", required = false) String searchString,
             @RequestParam(name = "tags", required = false) List<RecipeTag> tags) {
-        return ResponseEntity.ok(recipeService.findAllRecipes(page, size, tags));
+        return ResponseEntity.ok(recipeService.findAllRecipes(page, size, tags, searchString));
     }
 
     @GetMapping("/author")
     public ResponseEntity<PageResponse<RecipeResponse>> findAllRecipesByAuthor(
             @RequestParam(name = "page", defaultValue = "0", required = false) int page,
             @RequestParam(name = "size", defaultValue = "10", required = false) int size,
+            @RequestParam(name = "search", required = false) String searchString,
             @RequestParam(name = "tags", required = false) List<RecipeTag> tags,
             Authentication connectedUser) {
-        return ResponseEntity.ok(recipeService.findAllRecipesByOwner(page, size, tags, connectedUser));
+        return ResponseEntity.ok(recipeService.findAllRecipesByOwner(page, size, tags, searchString, connectedUser));
     }
 
     @PostMapping(value = "/image/{recipe-id}", consumes = "multipart/form-data")

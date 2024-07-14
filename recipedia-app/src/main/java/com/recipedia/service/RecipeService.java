@@ -20,8 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
-import static com.recipedia.util.RecipediaSpecification.containsTag;
-import static com.recipedia.util.RecipediaSpecification.withAuthorId;
+import static com.recipedia.util.RecipediaSpecification.*;
 
 @Service
 @RequiredArgsConstructor
@@ -42,9 +41,11 @@ public class RecipeService {
                 .orElseThrow(() -> new EntityNotFoundException("No recipe found with id:" + recipeId));
     }
 
-    public PageResponse<RecipeResponse> findAllRecipes(int page, int size, List<RecipeTag> tags) {
+    public PageResponse<RecipeResponse> findAllRecipes(int page, int size, List<RecipeTag> tags, String searchString) {
+
         Pageable pageable = PageRequest.of(page, size, Sort.by("createdAt").descending());
-        Page<Recipe> recipes = recipeRepository.findAll(containsTag(tags), pageable);
+
+        Page<Recipe> recipes = recipeRepository.findAll(containsTag(tags).and(titleContains(searchString)), pageable);
 
         List<RecipeResponse> recipeResponse = recipes.stream()
                 .map(recipeMapper::toRecipeResponse)
@@ -61,11 +62,14 @@ public class RecipeService {
         );
     }
 
-    public PageResponse<RecipeResponse> findAllRecipesByOwner(int page, int size, List<RecipeTag> tags, Authentication connectedUser) {
+    public PageResponse<RecipeResponse> findAllRecipesByOwner(int page, int size, List<RecipeTag> tags, String searchString, Authentication connectedUser) {
         User user = (User) connectedUser.getPrincipal();
 
         Pageable pageable = PageRequest.of(page, size, Sort.by("createdAt").descending());
-        Page<Recipe> recipes = recipeRepository.findAll(withAuthorId(user.getId()).and(containsTag(tags)), pageable);
+        Page<Recipe> recipes = recipeRepository.findAll(
+                withAuthorId(user.getId())
+                .and(containsTag(tags))
+                .and(titleContains(searchString)), pageable);
 
         List<RecipeResponse> recipeResponse = recipes.stream()
                 .map(recipeMapper::toRecipeResponse)

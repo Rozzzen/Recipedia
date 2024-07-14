@@ -22,4 +22,13 @@ public class RecipediaSpecification {
             return joinedTags.in(tags);
         };
     }
+
+    public static Specification<Recipe> titleContains(String searchString) {
+        return (root, query, criteriaBuilder) -> {
+            if (searchString == null || searchString.isEmpty()) {
+                return criteriaBuilder.isTrue(criteriaBuilder.literal(true));
+            }
+            return criteriaBuilder.like(criteriaBuilder.lower(root.get("title")), "%" + searchString.toLowerCase().trim() + "%");
+        };
+    }
 }
