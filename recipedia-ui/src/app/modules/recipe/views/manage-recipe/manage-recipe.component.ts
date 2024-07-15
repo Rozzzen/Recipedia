@@ -3,9 +3,10 @@ import {NgForOf, NgIf} from "@angular/common";
 import {FormArray, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {ActivatedRoute, Router, RouterLink} from "@angular/router";
 import {RecipeService} from "../../../../services/services/recipe.service";
-import {RecipeResponse} from "../../../../services/models/recipe-response";
+import {getAllPossibleTags, RecipeResponse} from "../../../../services/models/recipe-response";
 import {RecipeRequest} from "../../../../services/models/recipe-request";
 import {FileUploadService} from "../../../../services/file-upload/file-upload.service";
+import console from "node:console";
 
 @Component({
   selector: 'recipedia-manage-recipe',
@@ -40,7 +41,8 @@ export class ManageRecipeComponent implements OnInit {
       ingredients: this.formBuilder.array([
         this.createIngredient()]),
       cookingSteps: this.formBuilder.array([
-        this.createStep()])
+        this.createStep()]),
+      tags: this.formBuilder.array([])
     })
   }
 
@@ -65,12 +67,18 @@ export class ManageRecipeComponent implements OnInit {
             cookingSteps: this.formBuilder.array((recipe.cookingSteps || []).map(
               step => this.formBuilder.group({
                 text: step.text
-              })))
+              }))),
+            tags: this.formBuilder.array(recipe.tags || [])
           })
           if (recipe.titleImage) {
             this.fileUploadService.selectedPictureFile = this.fileUploadService.base64ToFile(recipe.titleImage.toString())
             this.fileUploadService.selectedPictureString = 'data:image/jpg;base64,' + recipe.titleImage
           }
+        },
+        error: err => {
+          console.log(err);
+          this.errorMsg = err.error.validationErrors;
+          window.scroll(0, 0)
         }
       })
     }
@@ -104,7 +112,6 @@ export class ManageRecipeComponent implements OnInit {
         else this.router.navigate(['recipes/my-recipes'])
       },
       error: err => {
-        console.log(err.errorMsg);
         this.errorMsg = err.error.validationErrors;
         window.scroll(0, 0)
       }
@@ -147,4 +154,23 @@ export class ManageRecipeComponent implements OnInit {
   removeIngredient(index: number): void {
     this.ingredients.removeAt(index);
   }
+
+  get tags(): FormArray {
+    return this.recipeForm.get('tags') as FormArray;
+  }
+
+  get possibleTags(): Array<string> {
+    return getAllPossibleTags().filter(item => !this.tags.value.includes(item))
+  }
+
+  createTag($event: any): void {
+    const control = this.recipeForm.get('tags') as FormArray
+    control.push(this.formBuilder.control($event.target.text));
+  }
+
+  removeTag(index: number): void {
+    this.tags.removeAt(index);
+  }
+
+  protected readonly console = console;
 }

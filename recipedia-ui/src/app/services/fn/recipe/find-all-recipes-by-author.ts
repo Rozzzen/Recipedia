@@ -12,7 +12,7 @@ export interface FindAllRecipesByAuthor$Params {
   page?: number;
   size?: number;
   search?: string;
-  tags?: Array<'KOREAN' | 'SALAD' | 'QUICK' | 'VEGAN' | 'ITALIAN' | 'VEGETARIAN' | 'SOUP' | 'BAKERY' | 'PASTA' | 'CHICKEN'>;
+  tags?: Array<'VEGAN' | 'SALAD' | 'SANDWICH' | 'SOUP' | 'SPICY' | 'DESSERT' | 'PASTA' | 'BBQ' | 'SEAFOOD' | 'HEALTHY' | 'EASY' | 'MEDITERRANEAN' | 'APPETIZER' | 'SNACK' | 'BAKED' | 'GRILLED' | 'QUICK' | 'KETO' | 'HOLIDAY' | 'PALEO'>;
 }
 
 export function findAllRecipesByAuthor(http: HttpClient, rootUrl: string, params?: FindAllRecipesByAuthor$Params, context?: HttpContext): Observable<StrictHttpResponse<PageResponseRecipeResponse>> {

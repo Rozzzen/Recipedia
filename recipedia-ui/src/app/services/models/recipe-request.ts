@@ -1,7 +1,7 @@
 /* tslint:disable */
 /* eslint-disable */
-import {CookingStep} from '../models/cooking-step';
-import {Ingredient} from '../models/ingredient';
+import {CookingStep} from './cooking-step';
+import {Ingredient} from './ingredient';
 
 export interface RecipeRequest {
   cookingSteps: Array<CookingStep>;
@@ -10,6 +10,6 @@ export interface RecipeRequest {
   id?: number;
   ingredients: Array<Ingredient>;
   preparationTime: string;
-  tags?: Array<'KOREAN' | 'SALAD' | 'QUICK' | 'VEGAN' | 'ITALIAN' | 'VEGETARIAN' | 'SOUP' | 'BAKERY' | 'PASTA' | 'CHICKEN'>;
+  tags?: Array<'VEGAN' | 'SALAD' | 'SANDWICH' | 'SOUP' | 'SPICY' | 'DESSERT' | 'PASTA' | 'BBQ' | 'SEAFOOD' | 'HEALTHY' | 'EASY' | 'MEDITERRANEAN' | 'APPETIZER' | 'SNACK' | 'BAKED' | 'GRILLED' | 'QUICK' | 'KETO' | 'HOLIDAY' | 'PALEO'>;
   title: string;
 }

@@ -1,3 +1,12 @@
 i, .fas {
   letter-spacing: 2px;
 }
+.dropdown-item {
+  cursor:pointer;
+}
+.dropdown a:hover {
+  background-color:lightgrey;
+}
+#tag-name{
+  height: 30px;
+}

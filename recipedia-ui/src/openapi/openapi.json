@@ -144,16 +144,26 @@
               "items": {
                 "type": "string",
                 "enum": [
-                  "KOREAN",
-                  "SALAD",
-                  "QUICK",
                   "VEGAN",
-                  "ITALIAN",
-                  "VEGETARIAN",
+                  "SALAD",
+                  "SANDWICH",
                   "SOUP",
-                  "BAKERY",
+                  "SPICY",
+                  "DESSERT",
                   "PASTA",
-                  "CHICKEN"
+                  "BBQ",
+                  "SEAFOOD",
+                  "HEALTHY",
+                  "EASY",
+                  "MEDITERRANEAN",
+                  "APPETIZER",
+                  "SNACK",
+                  "BAKED",
+                  "GRILLED",
+                  "QUICK",
+                  "KETO",
+                  "HOLIDAY",
+                  "PALEO"
                 ]
               }
             }
@@ -522,16 +532,26 @@
               "items": {
                 "type": "string",
                 "enum": [
-                  "KOREAN",
-                  "SALAD",
-                  "QUICK",
                   "VEGAN",
-                  "ITALIAN",
-                  "VEGETARIAN",
+                  "SALAD",
+                  "SANDWICH",
                   "SOUP",
-                  "BAKERY",
+                  "SPICY",
+                  "DESSERT",
                   "PASTA",
-                  "CHICKEN"
+                  "BBQ",
+                  "SEAFOOD",
+                  "HEALTHY",
+                  "EASY",
+                  "MEDITERRANEAN",
+                  "APPETIZER",
+                  "SNACK",
+                  "BAKED",
+                  "GRILLED",
+                  "QUICK",
+                  "KETO",
+                  "HOLIDAY",
+                  "PALEO"
                 ]
               }
             }
@@ -675,16 +695,26 @@
             "items": {
               "type": "string",
               "enum": [
-                "KOREAN",
-                "SALAD",
-                "QUICK",
                 "VEGAN",
-                "ITALIAN",
-                "VEGETARIAN",
+                "SALAD",
+                "SANDWICH",
                 "SOUP",
-                "BAKERY",
+                "SPICY",
+                "DESSERT",
                 "PASTA",
-                "CHICKEN"
+                "BBQ",
+                "SEAFOOD",
+                "HEALTHY",
+                "EASY",
+                "MEDITERRANEAN",
+                "APPETIZER",
+                "SNACK",
+                "BAKED",
+                "GRILLED",
+                "QUICK",
+                "KETO",
+                "HOLIDAY",
+                "PALEO"
               ]
             }
           }
@@ -880,16 +910,26 @@
             "items": {
               "type": "string",
               "enum": [
-                "KOREAN",
-                "SALAD",
-                "QUICK",
                 "VEGAN",
-                "ITALIAN",
-                "VEGETARIAN",
+                "SALAD",
+                "SANDWICH",
                 "SOUP",
-                "BAKERY",
+                "SPICY",
+                "DESSERT",
                 "PASTA",
-                "CHICKEN"
+                "BBQ",
+                "SEAFOOD",
+                "HEALTHY",
+                "EASY",
+                "MEDITERRANEAN",
+                "APPETIZER",
+                "SNACK",
+                "BAKED",
+                "GRILLED",
+                "QUICK",
+                "KETO",
+                "HOLIDAY",
+                "PALEO"
               ]
             }
           },
