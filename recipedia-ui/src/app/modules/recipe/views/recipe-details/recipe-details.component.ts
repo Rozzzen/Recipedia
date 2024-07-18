@@ -31,7 +31,6 @@ export class RecipeDetailsComponent implements OnInit {
   private _authUser: UserResponse = {}
   private _review: ReviewRequest = {recipeId: -1}
   reviews: Array<ReviewResponse> | undefined;
-  profilePicture: string | undefined;
 
   constructor(private activatedRoute: ActivatedRoute,
               private recipeService: RecipeService,
@@ -47,13 +46,14 @@ export class RecipeDetailsComponent implements OnInit {
       }).subscribe({
         next: (recipe: RecipeResponse) => {
           this._recipe = recipe
-          this.profilePicture = 'data:image/jpg;base64,' + this.recipe.titleImage?.toString();
+          this.recipe.titleImage = ['data:image/jpg;base64,' + this.recipe.titleImage?.toString()];
         }
       })
     }
     this.userService.getAuthenticatedUser().subscribe({
       next: value => {
         this.authUser = value;
+        this.authUser.profilePicture = ['data:image/jpg;base64,' + this.authUser.profilePicture?.toString()];
       }
     })
     this.findAllReviews();
